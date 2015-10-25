@@ -1,0 +1,152 @@
+<%
+# The MIT License (MIT)
+# 
+# Sonar Quamoco Plugin
+# Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+gradeAmin = widget_properties["gradeAmin"]
+gradeBmin = widget_properties["gradeBmin"]
+gradeCmin = widget_properties["gradeCmin"]
+gradeDmin = widget_properties["gradeDmin"]
+gradeEmin = widget_properties["gradeEmin"]
+%>
+
+<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'quamoco.css') -%>" media="screen" />
+
+<div class="quamoco_bullets_widget" style="height:100%; width:815px">
+      
+<div class="widget">
+          
+<div class="quamoco-bullets" id="quamoco-bullets" width="815">
+<!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+    
+    <h2>Quamoco Product Quality</h2>
+    <hr width="815" align="left"/>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'bullets.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'CombinedChart.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'components.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'moment.min.js') -%>"></script>
+
+<script>
+function grade(var value) {
+    if (value >= <%= gradeAmin %>)
+        return "A";
+    else if (value >= <%= gradeBmin %>)
+        return "B";
+    else if (value >= <%= gradeCmin %>)
+        return "C";
+    else if (value >= <%= gradeDmin %>)
+        return "D";
+    else if (value >= <%= gradeEmin %>)
+        return "E";
+    else
+        return "F";
+}
+
+var datas = [];
+
+$(document).read(function() {
+    var params = {
+        format: "json",
+        fromDateTime: moment().format("YYYY-MM-DDTHH:mm:ss.SSSZZ"),
+        metrics: "sc_quamoco_quality,sc_quamoco_func_suit,sc_quamoco_reliability,sc_quamoco_perf_eff,sc_quamoco_maintainability,sc_quamoco_security,sc_quamoco_portability",
+        resource: window.navbarOptions.get('contextKey')
+    };
+    var tens = {};
+    var tensMax = {};
+    var previous = {};
+    var current = {};
+    var names = [];
+        
+    $.getJSON('api/timemachine/index',params,function(d) {
+        for each (var obj in d['cols']) {
+            tens[obj['metric']] = [];
+            names.push(obj['metric']);
+        }
+            
+        for each (var obj in d['cells']) {
+            for (var i = 0; i < names.length; i++)
+                tens[names[i]].push(obj['v'][i]);
+        }
+        
+        for each (var obj in names){
+            tensMax[obj] = Math.max.apply(null, tens[obj]);
+        }
+        
+        for each (var obj in names) {
+            prev[obj] = tens[obj][tens[obj].length - 1];
+        }
+    });
+    
+    params = {
+        format: "json",
+        resource: window.navbarOptions.get('contextKey'), // get the resource name from the page
+        depth: 0,
+        scope: "PRJ",
+        languages: "java,cs",
+        includetrends: "false",
+        metrics: "sc_quamoco_quality,sc_quamoco_func_suit,sc_quamoco_reliability,sc_quamoco_perf_eff,sc_quamoco_maintainability,sc_quamoco_security,sc_quamoco_portability",
+    }
+    
+    $.getJSON('api/resources', params, function(d) {
+        
+    });
+    
+    for each (var name in names) {
+        var param = {
+            key: name,
+            format: "json"
+        }
+        
+        $.getJSON('/api/metrics', param, function(d) {
+            var obj = {
+                "title": d[0]['name'],
+                "subtitle": "",
+                "last10max": tensMax[name],
+                "last10": tens[name],
+                "ranges": [<%= gradeAmin %>,<%= gradeBmin %>,<%= gradeCmin %>,<%= gradeDmin %>,<%= gradeEmin %>],
+                "measures": [current[name], previous[name]],
+                "markers": [<%= gradeAmin %>],
+                "value": [current[name], diff[name]],
+                "grade": grade(current[name])
+            }
+            datas.push(obj);
+        });
+    }
+});
+
+var chart = d3.CombinedChart()
+    .height(45 - 5 - 20)
+    .valueFixed(2)
+    .containerWidth(800)
+    .data(datas)
+    .containerID("#quamoco-bullets")
+    .cssclass("quamoco")
+    .grade(true);
+    
+    chart.createChart();
+</script>
+<!--<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+</div>
+</div>
+</div>

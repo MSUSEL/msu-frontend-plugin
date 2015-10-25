@@ -1,0 +1,108 @@
+<%
+# The MIT License (MIT)
+# 
+# Sonar Quamoco Plugin
+# Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#chartTitle = widget_properties["chartTitle"]
+
+#metrics_of_domain = Metric.by_domain("MSU-Progress")
+#metricNames = ["Functionality Complete", "Engineer Productivity", "Issues Added"]
+#metricMap = {}
+#count = 0
+#js_data = "["
+#metrics_of_domain.each do |metricObj|
+#    if(!metricObj.nil?)
+#        measureObj = measure(metricObj.key);
+        
+#        if (!measureObj.nil?)
+#            if (metricObj.numeric? && !measureObj.value.nil? && metricNames.include?(metricObj.short_name))
+#                metricMap[metricObj.short_name] = measureObj.value
+#            end
+#        end
+#    end
+#end
+
+#metricNames.each do |name|
+#    value = metricMap[name]
+    #unless (value.nil?)
+#        retVal = "{"
+#        retVal.concat("\"title\":\"#{name}\",")
+#        retVal.concat("\"subtitle\":\"Between 0.0 and 1.0\",")
+#        retVal.concat("\"ranges\":[0.9,0.92,0.94,0.96,0.98],")
+#        retVal.concat("\"measures\":[.96,.985],")
+#        retVal.concat("\"markers\":[0.98]")
+#        retVal.concat("},")
+#        js_data.concat(retVal)
+#        count = count + 1
+    #end
+#end
+
+#js_data = js_data.chomp(",")
+#js_data.concat("]") 
+
+#chartHeight = 50 * count
+#chartWidth = 615
+
+%>
+
+<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'quamoco.css') -%>" media="screen" />
+
+<div class="quamoco_bullets_widget" style="height:100%; width:815px">
+      
+<div class="widget">
+          
+<div class="dev-bullets" id="dev-bullets" width="815">
+<!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+    
+    <h3>Development Progress</h3>
+    <hr width="815" align="left"/>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'bullets.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'CombinedChart.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'components.js') -%>"></script>
+<script>
+
+/*var data = <!--%=raw js_data %-->;*/
+
+/*var datas = data.length == 0 ? data : [{"title":"Functionality Complete","subtitle":"Between 0.0 and 1.0","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Engineer Productivity","subtitle":"Between 0.0 and 1.0","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Issues Added","subtitle":"Between 0.0 and 1.0","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"}];*/
+var datas = [{"title":"Functionality Complete","subtitle":"Between 0.0 and 1.0","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+            {"title":"Engineer Productivity","subtitle":"Between 0.0 and 1.0","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+            {"title":"Issues Added","subtitle":"Between 0.0 and 1.0","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"}];
+
+var chart = d3.CombinedChart()
+    .height(45 - 5 - 20)
+    .valueFixed(2)
+    .containerWidth(800)
+    .data(datas)
+    .containerID("#dev-bullets")
+    .cssclass("quamoco")
+    .grade(true);
+    
+    chart.createChart();
+
+</script>
+<!--<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+</div>
+</div>
+</div>

@@ -1,0 +1,278 @@
+<%
+# The MIT License (MIT)
+# 
+# Sonar Quamoco Plugin
+# Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#chartTitle = widget_properties["chartTitle"]
+
+#metrics_of_domain = Metric.by_domain("Quamoco-Quality")
+#methods = {"nugroho" => ["Principle", "Interest", "Ratio"],
+#           "chin" => ["Principle", "Interest", "Ratio"],
+#           "sqale" => ["Principle", "Ratio"], 
+#           "cast" => ["Principle", "Ratio"],
+#           "marinescu" => ["Index", "Ratio"]}
+#metricMap = {}
+#count = 0
+#js_data = "["
+#methods.each do |key, metrics|
+#    metrics.each do |metricObj|
+#        if(!metricObj.nil?)
+#            measureObj = measure(metricObj.key);
+            
+#            if (!measureObj.nil?)
+#                if (metricObj.numeric? && !measureObj.value.nil? && metricNames.include?(metricObj.short_name))
+#                    metricMap[metricObj.short_name] = measureObj.value
+#                end
+#            end
+#        end
+#    end
+#end
+
+#metricNames.each do |name|
+#    value = metricMap[name]
+    #unless (value.nil?)
+#        retVal = "{"
+#        retVal.concat("\"title\":\"#{name}\",")
+#        retVal.concat("\"subtitle\":\"Between 0.0 and 1.0\",")
+#        retVal.concat("\"ranges\":[0.9,0.92,0.94,0.96,0.98],")
+#        retVal.concat("\"measures\":[.96,.985],")
+#        retVal.concat("\"markers\":[0.98]")
+#        retVal.concat("},")
+#        js_data.concat(retVal)
+#        count = count + 1
+    #end
+#end
+
+#{"nugroho":[
+#    {"title":"Principal",
+#        "subtitle":"Man-Days",
+#        "last10max":1.0,
+#        "last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],
+#        "ranges":[0.9,0.92,0.94,0.96,0.98],
+#        "measures":[1.0,1.0],
+#        "markers":[0.98],
+#        "value":[1.0,0],
+#        "grade":"A"},
+#    {"title":"Interest","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+#    {"title":"Ratio","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"}]
+
+#js_data = js_data.chomp(",")
+#js_data.concat("]") 
+
+#chartHeight = 50 * count
+#chartWidth = 615
+
+%>
+<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'quamoco.css') -%>" media="screen" />
+
+<div class="td-bullets" id="td-bullets" style="width:100%;">
+<!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+    <span style="display:inline">
+	<div style="float:left;font-family:sans-serif">
+    <h2>Technical Debt</h2>
+	</div>
+	<div style="float:right;font-family:sans-serif;">
+	 <p>
+	 <form>Method:&nbsp;&nbsp;<select class="td-method" id="td-method">
+	   <option value="nugroho">Nugroho et al.</option>
+	   <option value="cast">CAST</option>
+	   <option value="sqale">SQALE</option>
+	   <option value="chin">Chin et al.</option>
+	   <option value="marinescu">Marinescu</option>
+	 </select></form>
+	 </p>
+	</div>
+	</span>
+    <hr width="100%" align="left"/>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'bullets.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'CombinedChart.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'components.js') -%>"></script>
+<script>
+
+var datas = {"nugroho":[{"title":"Principal","subtitle":"Man-Days","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Interest","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Ratio","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"}],
+			"cast":[{"title":"Principal","subtitle":"Man-Days","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Ratio","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"}],
+			"sqale":[{"title":"Principal","subtitle":"Man-Days","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Ratio","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"}],
+			"chin":[{"title":"Principal","subtitle":"Man-Days","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Interest","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Ratio","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"}],
+			"marinescu":[{"title":"Index","subtitle":"Man-Days","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"},
+			{"title":"Ratio","subtitle":"Percent","last10max":1.0,"last10":[0.75,0.5,0.7,0.81,0.79,0.8,0.85,0.9,0.95,1.0],"ranges":[0.9,0.92,0.94,0.96,0.98],"measures":[1.0,1.0],"markers":[0.98],"value":[1.0,0],"grade":"A"}]};
+
+
+var width = $("#td-bullets").parent().width();
+var chart = d3.CombinedChart()
+    .height(45 - 5 - 20)
+    .valueFixed(2)
+    .containerWidth(width - 10)
+    .data(datas["nugroho"])
+    .containerID("#td-bullets")
+    .cssclass("quamoco")
+    .grade(true);
+    
+chart.createChart();
+    
+/*d3.select("#td-method").on("change", function() {
+    d3.select("#td-bullets").selectAll("svg").datum(datas.chin).call(chart);
+});*/
+</script>
+<!--<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+</div>
+<div class="issue-bullets" id="issue-bullets" style="width:100%;">
+
+<script>
+var divwidth = $("#issue-bullets").parent().width();
+var issues = [{"title":"Anti-Patterns","subtitle":"Count","value":[20,2],"last10":[5,10,8,9,25,18,3,14,19,20],"ranges":[20],"measures":[20,20],"markers":[5]},
+			  {"title":"Rule Violations","subtitle":"Count","value":[100,3],"last10":[5,10,8,9,25,18,3,14,19,20],"ranges":[100],"measures":[100,100],"markers":[5]},
+			  {"title":"Design Pattern Grime","subtitle":"Count","value":[4,1],"last10":[5,10,8,9,25,18,3,14,19,20],"ranges":[4],"measures":[4,4],"markers":[5]},
+			  {"title":"Modularity Violations","subtitle":"Count","value":[5,0],"last10":[5,10,8,9,25,18,3,14,19,20],"ranges":[5],"measures":[5,5],"markers":[5]},
+			  {"title":"Code Smells","subtitle":"Count","value":[43,3],"last10":[5,10,8,9,25,18,3,14,19,20],"ranges":[43],"measures":[43,43],"markers":[5]}];
+			  
+var insets = {top: 5, bottom: 20, titleRight: 158, sparkLeft: 162, sparkRight: 224, bulletLeft: 226, bulletRight: 494, valueLeft: 515, valueRight: 568, gradeLeft: 570},
+    width = 270,
+    height = 45 - insets.top - insets.bottom;
+
+var chart = d3.bullet()
+    .width(width)
+    .height(height);
+
+var svg = d3.select("#issue-bullets")
+	.selectAll("svg")
+	.data(issues)
+    .enter()
+	.append("svg")
+      .attr("class", "quamoco")
+      .attr("width", divwidth - 10)
+      .attr("height", 45)
+      .append("g")
+      .attr("transform", "translate(" + insets.bulletLeft + "," + insets.top + ")")
+      .call(chart);
+
+var title = svg.append("g")
+    .style("text-anchor", "end")
+    .attr("transform", "translate(-80," + height / 2 + ")");
+
+title.append("text")
+    .attr("class", "label")
+    .text(function(d) { return d.title; });
+
+title.append("text")
+    .attr("class", "sublabel")
+    .attr("dy", "1.4em")
+    .text(function(d) { return d.subtitle; });
+
+var value = svg.append("g")
+	.style("text_anchor", "start")
+	.attr("transform", "translate(275," + height / 2 + ")");
+
+value.append("text")
+	.attr("class", "value")
+	.attr("x", 5)
+	.attr("y", height / 2)
+	.attr("fill", "steelblue")
+	.text(function(d) { return d.value[0]; });
+
+value.append("text")
+	.attr("class", function(d) {
+		if (d.value[1] < 0)
+			return "negchange";
+		else if (d.value[1] > 0)
+			return "poschange";
+		else
+			return "zerochange";
+	})
+	.attr("x", 70)
+	.attr("y", height / 2)
+	.attr("fill", function(d) {
+		if (d.value[1] < 0)
+			return "red";
+		else if (d.value[1] > 0)
+			return "green";
+		else
+			return "black";
+	})
+	.text(function(d) { return "(" + d.value[1] + ")";});
+	
+var spark = svg.append("g"),
+	w = 65,
+	h = height,
+	barPadding = 2;
+spark = spark.attr("transform", "translate(-70," + height / 2 + ")");
+	
+spark.selectAll("rect")
+	.data(function(d) { return d.last10; })
+	.enter()
+	.append("rect")
+	.attr({
+		x: function(d, i) { return i * (w / 10);},
+		y: function(d) {return (height / 2 - 20) + (20 - ((d / 20) * 20));}, //function(d) { var scale = d3.scale.linear().domain([0,1]).range([insets.bottom, insets.top]); return scale.linear(d)},
+		width: function(d) { return w / 10 - barPadding; },
+		height: function(d) { return (((d / 20) * 20)); },
+		fill: "black"
+	});
+	
+var svg2 = d3.select("#issue-bullets")
+	.insert("svg","svg")
+		.attr("class", "quamoco")
+		.attr("width", divwidth - 10)
+		.attr("height", 20)
+		.append("g")
+		.style("text-anchor", "start")
+		.attr("transform", "translate(" + insets.bulletLeft + ", 0)");
+
+svg2.append("text")
+	.attr("class", "header")
+	.attr("x", -77)
+	.attr("y", 15)
+	.text("Last 10 Builds");
+	
+svg2.append("text")
+	.attr("class", "header")
+	.attr("x", 100)
+	.attr("y", 15)
+	.text("Current Build");
+	
+svg2.append("text")
+	.attr("class", "header")
+	.attr("x", insets.valueLeft - insets.bulletLeft)
+	.attr("y", 15)
+	.text("Current");
+
+var svg3 = d3.select("#issue-bullets")
+	.insert("svg","svg")
+		.attr("class", "quamoco")
+		.attr("width", divwidth - 10)
+		.attr("height", 20)
+		.append("g")
+		.style("text-anchor", "start")
+		
+svg3.append("text")
+	.attr("class", "title")
+	.attr("x", 0)
+	.attr("y", 15)
+	.text("Issues")
+</script>
+</div>
