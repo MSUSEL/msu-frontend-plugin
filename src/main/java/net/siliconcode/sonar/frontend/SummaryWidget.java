@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * SiliconCode Frontend Plugin
+ * SiliconCode Sonar Front End Plugin
  * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -34,11 +34,21 @@ import org.sonar.api.web.WidgetPropertyType;
 
 /**
  * @author Isaac Griffith
- *
+ * @version 1.0
  */
 @UserRole(UserRole.USER)
 @Description("")
-@WidgetProperties({ @WidgetProperty(key = "chartTitle", type = WidgetPropertyType.STRING) })
+@WidgetProperties({
+        @WidgetProperty(key = "qualityMetric", defaultValue = "sc_summary_quality", type = WidgetPropertyType.METRIC, description = "Metric for quality.", optional = false),
+        @WidgetProperty(key = "rmfMetric", defaultValue = "sc_summary_rmf", type = WidgetPropertyType.METRIC, description = "Metric for RMF.", optional = false),
+        @WidgetProperty(key = "tdRatioMetric", defaultValue = "sc_summary_tdRatio", type = WidgetPropertyType.METRIC, description = "Metric for TD Ratio.", optional = false),
+        @WidgetProperty(key = "tdValueMetric", defaultValue = "sc_summary_tdValue", type = WidgetPropertyType.METRIC, description = "Metric for TD Value.", optional = false),
+        @WidgetProperty(key = "locMetric", defaultValue = "sc_summary_loc", type = WidgetPropertyType.METRIC, description = "Metric for LOC.", optional = false),
+        @WidgetProperty(key = "effortToAMetric", defaultValue = "sc_summary_effort_a", type = WidgetPropertyType.METRIC, description = "Metric for effort to A.", optional = false),
+        @WidgetProperty(key = "effortToBMetric", defaultValue = "sc_summary_effort_b", type = WidgetPropertyType.METRIC, description = "Metric for effort to B.", optional = false),
+        @WidgetProperty(key = "effortToCMetric", defaultValue = "sc_summary_effort_c", type = WidgetPropertyType.METRIC, description = "Metric for effort to C.", optional = false),
+        @WidgetProperty(key = "effortToDMetric", defaultValue = "sc_summary_effort_d", type = WidgetPropertyType.METRIC, description = "Metric for effort to D.", optional = false),
+        @WidgetProperty(key = "effortToEMetric", defaultValue = "sc_summary_effort_d", type = WidgetPropertyType.METRIC, description = "Metric for effort to E.", optional = false) })
 public class SummaryWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
     private static final String ID            = "Summary_widget";

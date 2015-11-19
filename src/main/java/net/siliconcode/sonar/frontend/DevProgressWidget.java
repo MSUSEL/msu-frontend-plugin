@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * SiliconCode Frontend Plugin
+ * SiliconCode Sonar Front End Plugin
  * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32,14 +32,16 @@ import org.sonar.api.web.WidgetProperties;
 import org.sonar.api.web.WidgetProperty;
 import org.sonar.api.web.WidgetPropertyType;
 
-
 /**
  * @author Isaac Griffith
- *
+ * @version 1.0
  */
 @UserRole(UserRole.USER)
 @Description("")
-@WidgetProperties({ @WidgetProperty(key = "chartTitle", type = WidgetPropertyType.STRING) })
+@WidgetProperties({
+        @WidgetProperty(key = "functionalityMetric", defaultValue = "sc_progress_functionality", type = WidgetPropertyType.METRIC, description = "Metric for functionality completed.", optional = false),
+        @WidgetProperty(key = "productivityMetric", defaultValue = "sc_progress_productivity", type = WidgetPropertyType.METRIC, description = "Metric for productivitity", optional = false),
+        @WidgetProperty(key = "issuesMetric", defaultValue = "sc_progress_issues", type = WidgetPropertyType.METRIC, description = "Count of issues.", optional = false) })
 public class DevProgressWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
     private static final String ID            = "dev_progress_widget";

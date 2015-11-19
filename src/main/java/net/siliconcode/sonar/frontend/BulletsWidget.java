@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Sonar Quamoco Plugin
+ * SiliconCode Sonar Front End Plugin
  * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -34,16 +34,25 @@ import org.sonar.api.web.WidgetPropertyType;
 
 /**
  * @author Isaac Griffith
+ * @version 1.0
  */
 @UserRole(UserRole.USER)
 @Description("")
 @WidgetProperties({
-    @WidgetProperty(key = "gradeAmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of A", optional = false),
-    @WidgetProperty(key = "gradeBmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of B", optional = false),
-    @WidgetProperty(key = "gradeCmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of C", optional = false),
-    @WidgetProperty(key = "gradeDmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of D", optional = false),
-    @WidgetProperty(key = "gradeEmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of E", optional = false)
-})
+        @WidgetProperty(key = "gradeAmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of A", optional = false),
+        @WidgetProperty(key = "gradeBmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of B", optional = false),
+        @WidgetProperty(key = "gradeCmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of C", optional = false),
+        @WidgetProperty(key = "gradeDmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of D", optional = false),
+        @WidgetProperty(key = "gradeEmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of E", optional = false),
+        @WidgetProperty(key = "qualityMetric", defaultValue = "sc_quamoco_quality", type = WidgetPropertyType.METRIC, description = "Metric for quality", optional = false),
+        @WidgetProperty(key = "functionalSuitabilityMetric", defaultValue = "sc_quamoco_func_suit", type = WidgetPropertyType.METRIC, description = "Metric for Functional Suitability", optional = false),
+        @WidgetProperty(key = "reliabilityMetric", defaultValue = "sc_quamoco_reliability", type = WidgetPropertyType.METRIC, description = "Metric for Reliability", optional = false),
+        @WidgetProperty(key = "performanceEfficiencyMetric", defaultValue = "sc_quamoco_perf_eff", type = WidgetPropertyType.METRIC, description = "Metric for Performance Efficiency", optional = false),
+        @WidgetProperty(key = "maintainabilityMetric", defaultValue = "sc_quamoco_maintainability", type = WidgetPropertyType.METRIC, description = "Metric for Maintainability", optional = false),
+        @WidgetProperty(key = "securityMetric", defaultValue = "sc_quamoco_security", type = WidgetPropertyType.METRIC, description = "Metric for Security", optional = false),
+        @WidgetProperty(key = "compatibilityMetric", defaultValue = "sc_quamoco_compatibility", type = WidgetPropertyType.METRIC, description = "Metric for Compatibility", optional = false),
+        @WidgetProperty(key = "usabilityMetric", defaultValue = "sc_quamoco_usability", type = WidgetPropertyType.METRIC, description = "Metric for Usability", optional = false),
+        @WidgetProperty(key = "portabilityMetric", defaultValue = "sc_quamoco_portability", type = WidgetPropertyType.METRIC, description = "Metric for Portability", optional = false) })
 public class BulletsWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
     private static final String ID            = "bullets_widget";

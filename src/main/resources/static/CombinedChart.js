@@ -8,14 +8,15 @@
 			data = null,
 			grade = true,
 			containerID = null,
-			cssclass = "quamoco";
+			cssclass = "quamoco",
+			chart = null;
 	
 		function CombinedChart() {}
 		CombinedChart.createChart = function() {
 			if (data) {
 				this.updateInsets();
 
-				var chart = d3.bullet()
+				chart = d3.bullet()
 					.width(insets.barRight - insets.barLeft)
 					.height(height);
 
@@ -80,6 +81,12 @@
 		CombinedChart.grade = function(x) {
 			if (!arguments.length) return grade;
 			grade = x;
+			return CombinedChart;
+		}
+		
+		CombinedChart.chart = function(x) {
+			if (!arguments.length) return chart;
+			chart = x;
 			return CombinedChart;
 		}
 		

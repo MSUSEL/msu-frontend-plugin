@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * SiliconCode Frontend Plugin
+ * SiliconCode Sonar Front End Plugin
  * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32,10 +32,9 @@ import org.sonar.api.web.WidgetProperties;
 import org.sonar.api.web.WidgetProperty;
 import org.sonar.api.web.WidgetPropertyType;
 
-
 /**
  * @author Isaac Griffith
- *
+ * @version 1.0
  */
 @UserRole(UserRole.USER)
 @Description("")

@@ -6,8 +6,8 @@
   <artifactId>msufront-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
 
-  <name>SiliconCode :: MSU Font End Plugin</name>
-  <description>SonarQube frontend for Montana State University Plugins</description>
+  <name>SiliconCode :: SiliconCode Sonar Font End Plugin</name>
+  <description>SonarQube frontend for SiliconCode Plugins</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
