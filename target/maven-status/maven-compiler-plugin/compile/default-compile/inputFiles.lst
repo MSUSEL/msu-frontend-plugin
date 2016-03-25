@@ -1,8 +1,8 @@
-/home/isaac/git/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/package-info.java
-/home/isaac/git/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/TestingWidget.java
-/home/isaac/git/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/FrontEndPlugin.java
-/home/isaac/git/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/TDWidget.java
-/home/isaac/git/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/RMFWidget.java
-/home/isaac/git/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/SummaryWidget.java
-/home/isaac/git/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/DevProgressWidget.java
-/home/isaac/git/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/BulletsWidget.java
+/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/package-info.java
+/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/FrontEndPlugin.java
+/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/RMFWidget.java
+/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/TestingWidget.java
+/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/TDWidget.java
+/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/DevProgressWidget.java
+/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/BulletsWidget.java
+/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/SummaryWidget.java
