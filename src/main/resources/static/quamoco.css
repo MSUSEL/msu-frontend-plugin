@@ -32,13 +32,3 @@
 .quamoco  .range.s5 { fill: #999999; }
 .quamoco  .measure.s0 { fill: lightsteelblue; }
 .quamoco  .measure.s1 { fill: steelblue; }
-
-.rounded-corners {
-	moz-border-radius: 5px;
-	webkit-border-radius: 5px;
-	khtml-border-radius: 5px;
-	border-radius: 5px;
-	background-color: #cccc66;
-	color: #990033;
-	text-align: center;
-}

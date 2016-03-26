@@ -1,13 +1,11 @@
-(function() {
-
-	d3.CombinedChart = function() {
+d3.CombinedChart = function() {
 		var insets = {top: 5, bottom: 20, maxSpark: 0, marginWidth: 5, space: 6, sbarWidth: 5, sbarGap: 2, sparkLeft: 0, sparkWidth: 0, barLeft: 0, sparkMid: 0, maxWidth: 0, valueWidth: 0, valueLeft: 0, barRight: 0, barMid: 0, gradeLeft: 0, gradeMid: 0, gradeWidth: 20, valueMid: 0},
 			height = 45 - insets.top - insets.bottom,
 			valueFixed = 2,
-			containerWidth = 615,
+			contWidth = 615,
 			data = null,
 			grade = true,
-			containerID = null,
+			contID = null,
 			cssclass = "quamoco",
 			chart = null;
 	
@@ -20,7 +18,7 @@
 					.width(insets.barRight - insets.barLeft)
 					.height(height);
 
-				var svg = d3.select(containerID)
+				var svg = d3.select(contID)
 					.selectAll("svg")
 					.data(data)
 					.enter()
@@ -60,9 +58,9 @@
 			return CombinedChart;
 		}
 		
-		CombinedChart.containerWidth = function(x) {
-			if (!arguments.length) return containerWidth;
-			containerWidth = x;
+		CombinedChart.contWidth = function(x) {
+			if (!arguments.length) return contWidth;
+			contWidth = x;
 			return CombinedChart;
 		}
 		
@@ -90,9 +88,9 @@
 			return CombinedChart;
 		}
 		
-		CombinedChart.containerID = function(x) {
-			if (!arguments.length) return containerID;
-			containerID = x;
+		CombinedChart.contID = function(x) {
+			if (!arguments.length) return contID;
+			contID = x;
 			return CombinedChart;
 		}
 		
@@ -159,7 +157,7 @@
 		}
 		
 		CombinedChart.constructHeader = function() {
-			var svg2 = d3.select(containerID)
+			var svg2 = d3.select(contID)
 				.insert("svg","svg")
 					.attr("class", "quamoco")
 					.attr("width", insets.maxWidth)
@@ -216,7 +214,7 @@
 			insets["sparkWidth"] = (insets.sbarWidth * 10) + (insets.sbarGap * 0);
 			insets["barLeft"] = insets.sparkLeft + (2 * insets.space) + insets.sparkWidth;
 			insets["sparkMid"] = insets.barLeft - ((insets.barLeft - insets.sparkLeft) / 2);
-			insets["maxWidth"] = containerWidth - (2 * insets.marginWidth);
+			insets["maxWidth"] = contWidth - (2 * insets.marginWidth);
 			insets["valueWidth"] = 2 * z;
 			insets["valueLeft"] = insets.maxWidth - (((grade ? 2 : 1) * insets.space) + (grade ? insets.gradeWidth : 0) + insets.valueWidth);
 			insets["barRight"] = insets.valueLeft;
@@ -228,4 +226,3 @@
 		
 		return CombinedChart;
 	};
-})();

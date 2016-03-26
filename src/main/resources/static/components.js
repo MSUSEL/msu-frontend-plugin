@@ -1,12 +1,12 @@
-function gradebox(container, header, category) {
-	container.append("text")
+function gradebox(cont, header, category) {
+	cont.append("text")
 		.attr("class", "title")
 		.attr("fill", "#999")
 		.attr("x", 0)
 		.attr("y", 20)
 		.text(header);
 	
-	var grade_g = container.append("g")
+	var grade_g = cont.append("g")
 		.style("text-anchor", "start")
 		.attr("transform", "translate(0, 40)");
 	
@@ -88,8 +88,8 @@ function valueField(g, startx, basey, category, field, unit, valfixed) {
 		});
 }
 
-function effortBox(container, transx, transy, letter) {
-	var effort = container.append("g")
+function effortBox(cont, transx, transy, letter) {
+	var effort = cont.append("g")
 		.attr("transform", "translate(" + transx + ", " + transy +")");
 
 	var effText = effort.append("g");
@@ -105,8 +105,8 @@ function effortBox(container, transx, transy, letter) {
 	valueWithChange(effTextVal, 45, 20, 50, 1, "effort", letter, "d");
 }
 
-function valueFieldWithHeader(container, headertype, header, headx, heady, spacer, invert, category, field, unit) {
-	container.append("text")
+function valueFieldWithHeader(cont, headertype, header, headx, heady, spacer, invert, category, field, unit) {
+	cont.append("text")
 		.attr("class", headertype)
 		.attr({
 			x: 0,
@@ -114,15 +114,15 @@ function valueFieldWithHeader(container, headertype, header, headx, heady, space
 		})
 		.text(header);
 
-	valueWithChange(container, headx + 5, heady + 25, spacer, invert, category, field, unit);
+	valueWithChange(cont, headx + 5, heady + 25, spacer, invert, category, field, unit);
 }
 
-function labelBox(container) {
-	container.append("text")
+function labelBox(cont) {
+	cont.append("text")
 		.attr("class", "label")
 		.text(function(d) { return d.title; });
 
-	container.append("text")
+	cont.append("text")
 		.attr("class", "sublabel")
 		.attr("dy", "1.4em")
 		.text(function(d) { return d.subtitle; });
