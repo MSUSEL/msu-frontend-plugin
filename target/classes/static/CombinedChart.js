@@ -7,7 +7,8 @@ d3.CombinedChart = function() {
 			grade = true,
 			contID = null,
 			cssclass = "quamoco",
-			chart = null;
+			chart = null,
+			sparkLines = false;
 	
 		function CombinedChart() {}
 		CombinedChart.createChart = function() {
@@ -37,7 +38,9 @@ d3.CombinedChart = function() {
 					.attr("transform", "translate(" + (insets.valueMid - insets.barLeft) + "," + height / 2 + ")");
 
 				valueWithChange(value, 0, height / 2, insets.space, false, "value", null, "", valueFixed, valueFixed);
-				this.createSpark(svg);
+				
+				if (sparkLines)
+					this.createSpark(svg);
 				
 				if (grade)
 					this.createGrade(svg);
@@ -82,6 +85,12 @@ d3.CombinedChart = function() {
 			return CombinedChart;
 		}
 		
+		CombinedChart.sparkLines = function(x) {
+			if (!arguments.length) return sparkLines;
+			sparkLines = x;
+			return CombinedChart;
+		}
+		
 		CombinedChart.chart = function(x) {
 			if (!arguments.length) return chart;
 			chart = x;
@@ -107,7 +116,10 @@ d3.CombinedChart = function() {
 
 			title.append("text")
 				.attr("class", "label")
-				.text(function(d) { return d.title; });
+				.text(function(d) { 
+					console.log("title: " + d.title);
+					return d.title; 
+			    });
 
 			title.append("text")
 				.attr("class", "sublabel")
@@ -165,12 +177,14 @@ d3.CombinedChart = function() {
 					.append("g")
 					.style("text-anchor", "start")
 
-			svg2.append("text")
-				.style("text-anchor", "middle")
-				.attr("class", "header")
-				.attr("x", insets.sparkMid)
-				.attr("y", 15)
-				.text("Last 10 Builds");
+		    if (sparkLines) {
+				svg2.append("text")
+					.style("text-anchor", "middle")
+					.attr("class", "header")
+					.attr("x", insets.sparkMid)
+					.attr("y", 15)
+					.text("Last 10 Builds");
+		    }
 				
 			svg2.append("text")
 				.style("text-anchor", "middle")
@@ -211,7 +225,7 @@ d3.CombinedChart = function() {
 			var y = Math.max.apply(Math, subtitlelen) * 5;
 			var z = Math.max.apply(Math, valuelen) * 12;
 			insets["sparkLeft"] = Math.max(x, y);
-			insets["sparkWidth"] = (insets.sbarWidth * 10) + (insets.sbarGap * 0);
+			insets["sparkWidth"] = sparkLines ? (insets.sbarWidth * 10) + (insets.sbarGap * 10) : 0;
 			insets["barLeft"] = insets.sparkLeft + (2 * insets.space) + insets.sparkWidth;
 			insets["sparkMid"] = insets.barLeft - ((insets.barLeft - insets.sparkLeft) / 2);
 			insets["maxWidth"] = contWidth - (2 * insets.marginWidth);

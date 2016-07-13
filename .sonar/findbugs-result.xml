@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.0.1" sequence="0" timestamp="1468355207000" analysisTimestamp="1468356238583" release="">
+  <Project>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/BulletsWidget.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/DevProgressWidget.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/FrontEndPlugin.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/RMFWidget.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/SummaryWidget.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/TDWidget.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/TestingWidget.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/java/net/siliconcode/sonar/frontend/package-info.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/src/main/resources/net/siliconcode/sonar/package-info.java</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/target/classes/net/siliconcode/sonar/frontend/BulletsWidget.class</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/target/classes/net/siliconcode/sonar/frontend/DevProgressWidget.class</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/target/classes/net/siliconcode/sonar/frontend/FrontEndPlugin.class</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/target/classes/net/siliconcode/sonar/frontend/RMFWidget.class</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/target/classes/net/siliconcode/sonar/frontend/SummaryWidget.class</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/target/classes/net/siliconcode/sonar/frontend/TDWidget.class</Jar>
+    <Jar>/home/git/sonar plugins/sonar-msufront-plugin/target/classes/net/siliconcode/sonar/frontend/TestingWidget.class</Jar>
+    <AuxClasspathEntry>/home/git/sonar plugins/sonar-msufront-plugin/target/classes</AuxClasspathEntry>
+    <AuxClasspathEntry>/home/git/sonar plugins/sonar-msufront-plugin/.sonar/findbugs/annotations.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/home/git/sonar plugins/sonar-msufront-plugin/.sonar/findbugs/jsr305.jar</AuxClasspathEntry>
+    <WrkDir>/home/git/sonar plugins/sonar-msufront-plugin/.sonar</WrkDir>
+  </Project>
+  <Errors errors="0" missingClasses="4">
+    <MissingClass>com.google.common.collect.Lists</MissingClass>
+    <MissingClass>org.sonar.api.SonarPlugin</MissingClass>
+    <MissingClass>org.sonar.api.web.AbstractRubyTemplate</MissingClass>
+    <MissingClass>org.sonar.api.web.RubyRailsWidget</MissingClass>
+  </Errors>
+  <FindBugsSummary timestamp="Tue, 12 Jul 2016 14:26:47 -0600" total_classes="7" referenced_classes="13" total_bugs="0" total_size="79" num_packages="1" java_version="1.8.0_91" vm_version="25.91-b14" cpu_seconds="12.47" clock_seconds="4.24" peak_mbytes="584.88" alloc_mbytes="3547.00" gc_seconds="0.08">
+    <FileStats path="net/siliconcode/sonar/frontend/BulletsWidget.java" bugCount="0" size="12"/>
+    <FileStats path="net/siliconcode/sonar/frontend/DevProgressWidget.java" bugCount="0" size="12"/>
+    <FileStats path="net/siliconcode/sonar/frontend/FrontEndPlugin.java" bugCount="0" size="7"/>
+    <FileStats path="net/siliconcode/sonar/frontend/RMFWidget.java" bugCount="0" size="12"/>
+    <FileStats path="net/siliconcode/sonar/frontend/SummaryWidget.java" bugCount="0" size="12"/>
+    <FileStats path="net/siliconcode/sonar/frontend/TDWidget.java" bugCount="0" size="12"/>
+    <FileStats path="net/siliconcode/sonar/frontend/TestingWidget.java" bugCount="0" size="12"/>
+    <PackageStats package="net.siliconcode.sonar.frontend" total_bugs="0" total_types="7" total_size="79">
+      <ClassStats class="net.siliconcode.sonar.frontend.BulletsWidget" sourceFile="BulletsWidget.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="net.siliconcode.sonar.frontend.DevProgressWidget" sourceFile="DevProgressWidget.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="net.siliconcode.sonar.frontend.FrontEndPlugin" sourceFile="FrontEndPlugin.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="net.siliconcode.sonar.frontend.RMFWidget" sourceFile="RMFWidget.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="net.siliconcode.sonar.frontend.SummaryWidget" sourceFile="SummaryWidget.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="net.siliconcode.sonar.frontend.TDWidget" sourceFile="TDWidget.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="net.siliconcode.sonar.frontend.TestingWidget" sourceFile="TestingWidget.java" interface="false" size="12" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="792" invocations="345" avgMicrosecondsPerInvocation="2296" maxMicrosecondsPerInvocation="43853" standardDeviationMircosecondsPerInvocation="5924"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="176" invocations="305" avgMicrosecondsPerInvocation="579" maxMicrosecondsPerInvocation="31607" standardDeviationMircosecondsPerInvocation="2464"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="149" invocations="13" avgMicrosecondsPerInvocation="11527" maxMicrosecondsPerInvocation="62926" standardDeviationMircosecondsPerInvocation="21706"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="147" invocations="368" avgMicrosecondsPerInvocation="401" maxMicrosecondsPerInvocation="26458" standardDeviationMircosecondsPerInvocation="1558"/>
+      <ClassProfile name="com.mebigfatguy.fbcontrib.collect.CollectStatistics" totalMilliseconds="135" invocations="13" avgMicrosecondsPerInvocation="10454" maxMicrosecondsPerInvocation="77931" standardDeviationMircosecondsPerInvocation="23482"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="118" invocations="98" avgMicrosecondsPerInvocation="1206" maxMicrosecondsPerInvocation="33172" standardDeviationMircosecondsPerInvocation="3896"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="102" invocations="126" avgMicrosecondsPerInvocation="813" maxMicrosecondsPerInvocation="10422" standardDeviationMircosecondsPerInvocation="1515"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="80" invocations="13" avgMicrosecondsPerInvocation="6180" maxMicrosecondsPerInvocation="21715" standardDeviationMircosecondsPerInvocation="7325"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="79" invocations="26" avgMicrosecondsPerInvocation="3074" maxMicrosecondsPerInvocation="76031" standardDeviationMircosecondsPerInvocation="14593"/>
+      <ClassProfile name="com.mebigfatguy.fbcontrib.collect.CollectMethodsReturningImmutableCollections" totalMilliseconds="70" invocations="13" avgMicrosecondsPerInvocation="5395" maxMicrosecondsPerInvocation="35690" standardDeviationMircosecondsPerInvocation="9293"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="56" invocations="13" avgMicrosecondsPerInvocation="4347" maxMicrosecondsPerInvocation="29674" standardDeviationMircosecondsPerInvocation="8022"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.EqualsOperandShouldHaveClassCompatibleWithThis" totalMilliseconds="53" invocations="13" avgMicrosecondsPerInvocation="4147" maxMicrosecondsPerInvocation="37739" standardDeviationMircosecondsPerInvocation="9849"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildObligationPolicyDatabase" totalMilliseconds="51" invocations="13" avgMicrosecondsPerInvocation="3956" maxMicrosecondsPerInvocation="29291" standardDeviationMircosecondsPerInvocation="7934"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="40" invocations="13" avgMicrosecondsPerInvocation="3099" maxMicrosecondsPerInvocation="21762" standardDeviationMircosecondsPerInvocation="5865"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>

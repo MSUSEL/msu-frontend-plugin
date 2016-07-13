@@ -33,6 +33,8 @@ import org.sonar.api.web.WidgetProperty;
 import org.sonar.api.web.WidgetPropertyType;
 
 /**
+ * DevProgress widget provides a widget to monitor developer progress as a function of functionality and productivity.
+ * 
  * @author Isaac Griffith
  * @version 1.0
  */
@@ -48,33 +50,27 @@ public class DevProgressWidget extends AbstractRubyTemplate implements RubyRails
     private static final String TITLE         = "Sonar Developer Progress Summary";
     private static final String TEMPLATE_PATH = "/net/siliconcode/sonar/frontend/dev_progress.html.erb";
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getId()
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public String getId()
-    {
+    public String getId() {
         return ID;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.AbstractRubyTemplate#getTemplatePath()
+    /**
+     * {@inheritDoc}
      */
     @Override
-    protected String getTemplatePath()
-    {
+    protected String getTemplatePath() {
         return TEMPLATE_PATH;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getTitle()
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return TITLE;
     }
 }

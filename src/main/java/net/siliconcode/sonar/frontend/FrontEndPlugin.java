@@ -24,12 +24,13 @@
  */
 package net.siliconcode.sonar.frontend;
 
+import static java.util.Arrays.asList;
+
 import java.util.List;
 
-import org.sonar.api.Extension;
 import org.sonar.api.SonarPlugin;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 /**
  * @author Isaac Griffith
@@ -37,18 +38,16 @@ import com.google.common.collect.ImmutableList;
  */
 public class FrontEndPlugin extends SonarPlugin {
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.Plugin#getExtensions()
+    /**
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<Class<? extends Extension>> getExtensions()
-    {
-        final ImmutableList.Builder<Class<? extends Extension>> builder = ImmutableList.builder();
-        builder.add(BulletsWidget.class, DevProgressWidget.class, RMFWidget.class, SummaryWidget.class, TDWidget.class,
-                TestingWidget.class);
+    public List getExtensions() {
+        List extensions = Lists.newArrayList();
+        extensions.addAll(asList(BulletsWidget.class, DevProgressWidget.class, RMFWidget.class, SummaryWidget.class,
+                TDWidget.class, TestingWidget.class));
 
-        return builder.build();
+        return extensions;
     }
 }

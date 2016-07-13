@@ -22,26 +22,141 @@
   # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   # SOFTWARE.
 
+  # require 'json'
   # Grading Scheme
-  gradeAmin = widget_properties["gradeAmin"]
-  gradeBmin = widget_properties["gradeBmin"]
-  gradeCmin = widget_properties["gradeCmin"]
-  gradeDmin = widget_properties["gradeDmin"]
-  gradeEmin = widget_properties["gradeEmin"]
-
+  # gradeAmin = widget_properties["gradeAmin"]
+  # gradeBmin = widget_properties["gradeBmin"]
+  # gradeCmin = widget_properties["gradeCmin"]
+  # gradeDmin = widget_properties["gradeDmin"]
+  # gradeEmin = widget_properties["gradeEmin"]
+  
   # Metric names
-  quality = widget_properties["qualityMetric"]
-  func_suit = widget_properties["functionalSuitabilityMetric"]
-  reliability = widget_properties["reliabilityMetric"]
-  perf_eff = widget_properties["performanceEfficiencyMetric"]
-  maintainability = widget_properties["maintainabilityMetric"]
-  security = widget_properties["securityMetric"]
-  portability = widget_properties["portabilityMetric"]
-  usability = widget_properties["usabilityMetric"]
-  compatibility = widget_properties["compatibilityMetric"]
+  # quality = widget_properties["qualityMetric"]
+  # func_suit = widget_properties["functionalSuitabilityMetric"]
+  # reliability = widget_properties["reliabilityMetric"]
+  # perf_eff = widget_properties["performanceEfficiencyMetric"]
+  # maintainability = widget_properties["maintainabilityMetric"]
+  # security = widget_properties["securityMetric"]
+  # portability = widget_properties["portabilityMetric"]
+  # usability = widget_properties["usabilityMetric"]
+  # compatibility = widget_properties["compatibilityMetric"]
+  
+  
+  
+  $data = Hash.new
+  
+  $gradeAmin = 0.98
+  $gradeBmin = 0.96
+  $gradeCmin = 0.94
+  $gradeDmin = 0.92 
+  $gradeEmin = 0.90
+  
+  def grade(value)
+    if value.to_f >= $gradeAmin
+        return 'A'
+    elsif value.to_f >= $gradeBmin
+        return 'B'
+    elsif value.to_f >= $gradeCmin
+        return 'C'
+    elsif value.to_f >= $gradeDmin
+        return 'D'
+    elsif value.to_f >= $gradeEmin
+        return 'E'
+    else
+        return 'F'
+    end
+  end
+  
+  def value_of(metric_or_measure)
+      m = nil
+      if metric_or_measure.is_a? ProjectMeasure
+          m = metric_or_measure
+      elsif @project.last_snapshot
+          m = @project.last_snapshot.measure(metric_or_measure)
+      end
+      
+      return '' if m.nil?
+      
+      return m.formatted_value if m && m.metric
+  end
+  
+  # def last_10(metric)
+      # pid = @project.id
+      
+      # last10 = Array.new
+      
+      # results = Snapshot.order(created_at: :desc).limit(10).order(created_at: :asc)
+      # results.each |shot| do
+          # m = shot.measure(metric)
+          # last10 << m.formatted_value unless m.nil?
+      # end
+      
+      # last10
+  # end
+  
+  def set_data(model)
+      metrics = Hash.new
+      metric_names = nil
+      
+      quamoco_names = "quamoco.QUALITY,quamoco.FUNCTIONAL_SUITABILITY,quamoco.SECURITY,quamoco.RELIABILITY,quamoco.MAINTAINABILITY,quamoco.PERFORMANCE_EFFICIENCY,quamoco.PORTABILITY,quamoco.FUNCTIONAL_CORRECTNESS,quamoco.TESTABILITY,quamoco.MODIFIABILITY,quamoco.ANALYZABILITY,quamoco.REUSABILITY,quamoco.TIME_BEHAVIOR,quamoco.RESOURCE_UTILIZATION"
+      qmood_names = "qmood.REUSABILITY,qmood.FLEXIBILITY,qmood.UNDERSTANDABILITY,qmood.FUNCTIONALITY,qmood.EXTENDIBILITY,qmood.EFFECTIVENESS"
+      columbus_names = "columbus.MAINTAINABILITY,columbus.TESTABILITY,columbus.ANALYZABILITY,columbus.EFFECTIVENESS,columbus.STABILITY,columbus.CHANGEABILITY"
+      sqale_names = "maintainability,efficiency,reliability,usability,portability"
+      
+      case model
+          when 'Quamoco'
+              metric_names = quamoco_names
+          when 'Columbus'
+              metric_names = columbus_names
+          when 'QMOOD'
+              metric_names = qmood_names
+          when 'SQALE'
+              metric_names = sqale_names
+          else
+              metric_names = quamoco_names
+      end 
+      
+      unless metric_names.nil?
+          metric_names.split(",").each do |x|
+          	metrics[x] = metric(x)
+          end
+      end
+      
+      datas = Array.new
+     
+      metrics.each do |k, v|
+      	current = value_of(v)
+      	previous = value_of(v)
+      	last10 = Array.new
+      	obj = {
+    		"title" => v.short_name,
+    		"subtitle" => "",
+    		"last10max" => 0, # last10.max,
+    		"last10" => last10,
+    		"ranges" => [
+    			$gradeAmin,$gradeBmin,$gradeCmin,$gradeDmin,$gradeEmin
+    		],
+    		"measures" => [current.to_f, previous.to_f],
+    		"markers" => [$gradeAmin],
+    		"value" => [current.to_f, (previous.to_f - current.to_f).to_f],
+    		"grade" => grade(current)
+    	}
+    	
+    	datas << obj
+      end 
+      
+      $data[model] = datas
+  end
+  
+  # names = ['Quamoco', 'Columbus', 'QMOOD', 'SQALE']
+  names = ['Quamoco']
+  names.each {|x| set_data(x)}
+  # names.each do |name|
+      # set_data(name)
+  # end
 %>
 
-<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'quamoco.css') -%>" media="screen" />
+<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'msufrontend', :path => 'quamoco.css') %>" media="screen" />
 
 <div id="quamoco-bullets" class="quamoco-bullets quamoco_bullets_widget" style="height:100%;width:100%;">
 
@@ -55,41 +170,26 @@
 					Model:&nbsp;&nbsp;
 					<select class="td-method" id="td-method" onchange="updateEverything(this.options[this.selectedIndex].text)">
 						<option value="quamoco">Quamoco</option>
-						<!--<option value="qmood">QMOOD</option>
+						<!--<option value="qmood">QMOOD</option>-->
 						<option value="sqale">SQALE</option>
-						<option value="columbus">Columbus</option>-->
+						<!--<option value="columbus">Columbus</option>-->
 					</select>
 				</form>
 			</div>
 			<hr style="float:left;width:100%"/>
 		</div> </span>
-	<script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'bullets.js') -%>"></script>
-	<script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'CombinedChart.js') -%>"></script>
-	<script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'components.js') -%>"></script>
-	<!--<script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'moment.min.js') -%>"></script>-->
+	<script src="<%= url_for_static(:plugin => 'msufrontend', :path => 'bullets.js') %>"></script>
+	<script src="<%= url_for_static(:plugin => 'msufrontend', :path => 'components.js') %>"></script>
+	<script src="<%= url_for_static(:plugin => 'msufrontend', :path => 'CombinedChart.js') %>"></script>
 
 	<script>
-				// Update the quality display
-		function metrics(selected) {
-			if (selected === "Quamoco")
-			{
-				return "sc_td_nugroho_principal,sc_td_nugroho_interest,sc_td_nugroho_ratio";
-			}
-			else if (selected === "QMOOD")
-			{
-				return "sc_td_cast_principal,sc_td_cast_principal";
-			}
-			else if (selected === "Columbus")
-			{
-				return "sc_td_chin_principal,sc_td_chin_interest,sc_td_chin_ratio";
-			}
-			else if (selected === "SQALE")
-			{
-				return "";
-			}
+	    var allData = JSON.parse('<%= raw $data.to_json %>');
+		
+		function updateMetrics(selected) {
+		    datas = allData[selected];
 		}
-
-		function setTitle(selected) {
+        
+		function set_title(selected) {
 			if (selected === "Quamoco") {
 				document.getElementById("title-h2").innerHTML = "Quamoco Quality Model";
 				document.getElementById("compliance").innerHTML = "(ISO/IEC 25010)";
@@ -104,132 +204,35 @@
 				document.getElementById("compliance").innerHTML = "(ISO 9126)";
 			}
 		}
-
-		// Determine the grade associated with the provided value
-		function grade(value) {
-			if (value >= <%= gradeAmin %>)
-				return "A";
-			else if (value >= <%= gradeBmin %>)
-				return "B";
-			else if (value >= <%= gradeCmin %>)
-				return "C";
-			else if (value >= <%= gradeDmin %>)
-				return "D";
-			else if (value >= <%= gradeEmin %>)
-				return "E";
-			else
-				return "F";
-		}
 		
-		function getContextID() {
-			href = jQuery(_x('//ul[@class="nav-crumbs"]/li/a')).attr('href')
-			id = href.split('&id=')[1]
-			return jQuery.decodeURIComponent(id)
-		}
-
+		function updateEverything(selected) {
+            set_title(selected);
+            
+            d3.select("#quamoco-bullets").selectAll("svg").remove();
+            
+            updateMetrics(selected.trim());
+            var chart = d3.CombinedChart()
+                .height(45 - 5 - 20)
+                .valueFixed(2)
+                .contWidth(chartWidth)
+                .data(datas)
+                .contID("#quamoco-bullets")
+                .cssclass("quamoco")
+                .grade(true);
+            if (datas[0]['last10'].length == 0)
+            {
+                chart.sparkLines(false);
+            } else {
+                chart.sparkLines(false);
+            }
+            chart.createChart();
+        }
+		
 		// Setup the chart width and the data variable
 		var chartWidth = jQuery('#quamoco-bullets').parent().width();
 		var datas = [];
-
-		// Extract data using SonarQube webservice and then fill the datas variable
-		jQuery(document).read(getData());
-
-		function getData() {
-			var params = {
-				format: "json",
-				fromDateTime: moment().format("YYYY-MM-DDTHH:mm:ss.SSSZZ"),
-				metrics: "<%= quality %>,<%= func_suit %>,<%= reliability %>,<%= perf_eff %>,<%= maintainability %>,<%= security %>,<%= portability %>,<%= usability %>,<%= compatibility %>",
-				resource: getContextID()
-			};
-			var tens = {};
-			var tensMax = {};
-			var previous = {};
-			var current = {};
-			var names = [];
-	
-			// get last n days of values
-			jQuery.getJSON('api/timemachine/index',params,function(d) {
-				for (let obj of d["cols"]) {
-					tens[obj["metric"]] = [];
-					names.push(obj["metric"]);
-				}
-
-				// create trend array for each metric
-				for (let obj of d["cells"]) {
-					for (var i = 0; i < names.length; i++)
-						tens[names[i]].push(obj["v"][i]);
-				}
-
-				// find max of previous values
-				for (let obj of names){
-					tensMax[obj] = Math.max.apply(null, tens[obj]);
-				}
-
-				// set the previous value
-				for (let obj of names) {
-					prev[obj] = tens[obj][tens[obj].length - 1];
-				}
-			});
-	
-			params = {
-			format: "json",
-			resource: window.navbarOptions.get("contextKey"), // get the resource name from the page
-			depth: 0,
-			scope: "PRJ",
-			languages: "java,cs",
-			includetrends: "false",
-			metrics: "<%= quality %>,<%= func_suit %>,<%= reliability %>,<%= perf_eff %>,<%= maintainability %>,<%= security %>,<%= portability %>,<%= usability %>,<%= compatibility %>",
-			}
-	
-			// get current measures
-			jQuery.getJSON('api/resources', params, function(d) {chartWidth
-				for (let obj of d["msr"]) {
-					var key = obj["key"];
-					var val = obj["val"];
-					current[key] = val;
-				}
-			});
-	
-			// fill in the datas variable
-			for (let name of names) {
-				var param = {
-					key: name,
-					format: "json"
-				}
-	
-				jQuery.getJSON('/api/metrics', param, function(d) {
-					var obj = {
-						"title": d[0]['name'],
-						"subtitle": "",
-						"last10max": tensMax[name],
-						"last10": tens[name],
-						"ranges": [
-							<%= gradeAmin %>,<%= gradeBmin %>,<%= gradeCmin %>,<%= gradeDmin %>,<%= gradeEmin %>
-						],
-						"measures": [current[name], previous[name]],
-						"markers": [
-							<%= gradeAmin %>
-						],
-						"value": [current[name], previous[name] - current[name]],
-						"grade": grade(current[name])
-					};
-					datas.push(obj);
-				});
-			}
-		}
-
-		var chart = d3.CombinedChart().height(45 - 5 - 20).valueFixed(2).contWidth(chartWidth).data(datas).contID("#quamoco-bullets").cssclass("quamoco").grade(true);
-
-		chart.createChart();
 		
-		function updateEverything(selected) {
-			setTitle(selected);
-	
-			d3.select("#quamoco-bullets").selectAll("svg").remove();
-			chart = d3.CombinedChart().height(45 - 5 - 20).valueFixed(2).contWidth(chartWidth).data(datas).contID("#quamoco-bullets").cssclass("quamoco").grade(true);
-	
-			chart.createChart();
-		}
+		updateEverything(jQuery('#td-method :selected').text());
 	</script>
 	<!--<![endif]-->
 	<!--[if (gte IE 9)|!(IE)]><!-->

@@ -58,9 +58,8 @@ public class RMFWidget extends AbstractRubyTemplate implements RubyRailsWidget {
     private static final String TITLE         = "Sonar RMF Bullet Chart";
     private static final String TEMPLATE_PATH = "/net/siliconcode/sonar/frontend/rmf.html.erb";
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getId()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getId()
@@ -68,9 +67,8 @@ public class RMFWidget extends AbstractRubyTemplate implements RubyRailsWidget {
         return ID;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.AbstractRubyTemplate#getTemplatePath()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected String getTemplatePath()
@@ -78,9 +76,8 @@ public class RMFWidget extends AbstractRubyTemplate implements RubyRailsWidget {
         return TEMPLATE_PATH;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getTitle()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getTitle()
