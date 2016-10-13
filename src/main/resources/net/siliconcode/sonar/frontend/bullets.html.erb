@@ -77,7 +77,7 @@
       
       return '' if m.nil?
       
-      return m.formatted_value if m && m.metric
+      return m.value if m && m.metric
   end
   
   # def last_10(metric)
@@ -160,7 +160,7 @@
 
 <div id="quamoco-bullets" class="quamoco-bullets quamoco_bullets_widget" style="height:100%;width:100%;">
 
-	<!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
+    <!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
 	<!--[if (gte IE 9)|!(IE)]><!-->
 	<span style="display:inline;width:100%;">
 		<div style="float:left;font-family:sans-serif;width:100%;">
@@ -178,6 +178,17 @@
 			</div>
 			<hr style="float:left;width:100%"/>
 		</div> </span>
+		<div id="gradeKey">  
+            <p>
+                <h3>Grade Key:</h3>
+                <b>A</b> : &ge; 0.98
+                <b>B</b> : &ge; 0.96
+                <b>C</b> : &ge; 0.94
+                <b>D</b> : &ge; 0.92
+                <b>E</b> : &ge; 0.90
+                <b>F</b> : &lt; 0.90
+            </p>
+        </div>
 	<script src="<%= url_for_static(:plugin => 'msufrontend', :path => 'bullets.js') %>"></script>
 	<script src="<%= url_for_static(:plugin => 'msufrontend', :path => 'components.js') %>"></script>
 	<script src="<%= url_for_static(:plugin => 'msufrontend', :path => 'CombinedChart.js') %>"></script>

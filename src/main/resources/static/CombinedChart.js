@@ -1,7 +1,7 @@
 d3.CombinedChart = function() {
 		var insets = {top: 5, bottom: 20, maxSpark: 0, marginWidth: 5, space: 6, sbarWidth: 5, sbarGap: 2, sparkLeft: 0, sparkWidth: 0, barLeft: 0, sparkMid: 0, maxWidth: 0, valueWidth: 0, valueLeft: 0, barRight: 0, barMid: 0, gradeLeft: 0, gradeMid: 0, gradeWidth: 20, valueMid: 0},
 			height = 45 - insets.top - insets.bottom,
-			valueFixed = 2,
+			valueFixed = 4,
 			contWidth = 615,
 			data = null,
 			grade = true,

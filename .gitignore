@@ -4,3 +4,9 @@
 *.jar
 *.class
 /target/
+target
+target/generated-sources
+target/maven-archiver
+target/maven-status
+target/msufront-plugin-1.1
+target/msufront-plugin-1.1.jar
