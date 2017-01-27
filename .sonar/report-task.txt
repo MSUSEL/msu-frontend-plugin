@@ -1,5 +1,0 @@
-projectKey=sonar-msufront-plugin:1.0
-serverUrl=http://localhost:9099
-dashboardUrl=http://localhost:9099/dashboard/index/sonar-msufront-plugin:1.0
-ceTaskId=AVYB-eptSjE-utglx0Qz
-ceTaskUrl=http://localhost:9099/api/ce/task?id=AVYB-eptSjE-utglx0Qz
