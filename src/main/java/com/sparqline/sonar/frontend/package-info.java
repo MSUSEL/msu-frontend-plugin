@@ -1,10 +1,35 @@
 /**
- * This package includes widget definitions for the SonarQube > 5.2 framework. Each widget is designed to provide
- * a display for infomation coming from the SparQLine Analytics, LLC widgets, including but not limited to: Quamoco
- * Plugin, Undertand Plugin, and Technical Assets Plugin.
+ * The MIT License (MIT)
+ *
+ * SparQLine Analytics Sonar Front End Plugin
+ * Copyright (c) 2015-2017 Isaac Griffith, SparQLine Analytics, LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 /**
+ * This package includes widget definitions for the SonarQube > 5.6.5 framework.
+ * Each widget is designed to provide
+ * a display for infomation coming from the SparQLine Analytics, LLC widgets,
+ * including: Quamoco Plugin, Developer Progress Plugin, RMF Plugin, Summary
+ * Data Plugin, and the Testing Plugin.
+ * 
  * @author Isaac Griffith
- *
+ * @version 1.1.1
  */
-package net.siliconcode.sonar.frontend;
+package com.sparqline.sonar.frontend;

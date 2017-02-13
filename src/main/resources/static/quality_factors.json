@@ -1,0 +1,37 @@
+{
+	"factor": "Quality @Product",
+    "subfactors": [
+			{
+				"factor": "Functional Suitability",
+				"subfactors": ["Functional Appropriateness","Functional Correctness","Functional Completeness"]
+			},
+			{
+				"factor": "Performance Efficiency",
+				"subfactors": ["Time Behavior","Resource Utilization","Capacity"]
+			},
+			{
+				"factor": "Compatibility",
+				"subfactors": ["Co-existence","Interoperability"]
+			},
+			{
+				"factor": "Usability",
+				"subfactors": ["Appropriateness Recognisability","Learnability","Operability","User Error Protection","User Interface Aesthetics","Accessibility"]
+			},
+			{
+				"factor": "Reliability",
+				"subfactors": ["Maturity","Availability","Fault Tolerance","Recoverability"]
+			},			
+			{
+				"factor": "Security",
+				"subfactors": ["Confidentiality","Integrity","Non-repudiation","Accountability","Authenticity"]
+			},			
+			{
+				"factor": "Maintainability",
+				"subfactors": ["Modularity","Reusability","Analysability","Modifiability","Testability"]
+			},
+			{
+				"factor": "Portability",
+				"subfactors": ["Adaptability","Installability","Replaceability"]
+			}
+	]
+}

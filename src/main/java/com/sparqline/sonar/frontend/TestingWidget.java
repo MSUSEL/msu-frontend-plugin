@@ -1,8 +1,8 @@
 /**
  * The MIT License (MIT)
  *
- * SiliconCode Sonar Front End Plugin
- * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+ * SparQLine Analytics Sonar Front End Plugin
+ * Copyright (c) 2015-2017 Isaac Griffith, SparQline Analytics, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.siliconcode.sonar.frontend;
+package com.sparqline.sonar.frontend;
 
 import org.sonar.api.web.AbstractRubyTemplate;
 import org.sonar.api.web.Description;
@@ -33,21 +33,22 @@ import org.sonar.api.web.WidgetProperty;
 import org.sonar.api.web.WidgetPropertyType;
 
 /**
+ * A Ruby On Rails widget for displaying Testing information in SonarQube.
+ * 
  * @author Isaac Griffith
- * @version 1.0
+ * @version 1.1.1
  */
 @UserRole(UserRole.USER)
-@Description("")
+@Description("SparQLine Testing Widget")
 @WidgetProperties({ @WidgetProperty(key = "chartTitle", type = WidgetPropertyType.STRING) })
 public class TestingWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
-    private static final String ID            = "testing_widget";
-    private static final String TITLE         = "Sonar Testing Display";
-    private static final String TEMPLATE_PATH = "/net/siliconcode/sonar/frontend/testing.html.erb";
+    private static final String ID            = "sparqline_testing_widget";
+    private static final String TITLE         = "SparQLine Testing Display";
+    private static final String TEMPLATE_PATH = "/com/sparqline/sonar/frontend/testing.html.erb";
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getId()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getId()
@@ -55,9 +56,8 @@ public class TestingWidget extends AbstractRubyTemplate implements RubyRailsWidg
         return ID;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.AbstractRubyTemplate#getTemplatePath()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected String getTemplatePath()
@@ -65,9 +65,8 @@ public class TestingWidget extends AbstractRubyTemplate implements RubyRailsWidg
         return TEMPLATE_PATH;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getTitle()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getTitle()

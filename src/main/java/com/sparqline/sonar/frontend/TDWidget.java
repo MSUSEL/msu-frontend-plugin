@@ -1,8 +1,8 @@
 /**
  * The MIT License (MIT)
  *
- * SiliconCode Sonar Front End Plugin
- * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+ * SparQLine Analytics Sonar Front End Plugin
+ * Copyright (c) 2015-2017 Isaac Griffith, SparQLine Analytics, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.siliconcode.sonar.frontend;
+package com.sparqline.sonar.frontend;
 
 import org.sonar.api.web.AbstractRubyTemplate;
 import org.sonar.api.web.Description;
@@ -33,21 +33,22 @@ import org.sonar.api.web.WidgetProperty;
 import org.sonar.api.web.WidgetPropertyType;
 
 /**
+ * A Ruby on Rails Widget for the display of technical debt information.
+ * 
  * @author Isaac Griffith
- * @version 1.0
+ * @version 1.1.1
  */
 @UserRole(UserRole.USER)
-@Description("")
+@Description("SparQLine Analytics Technical Debt Display Widget")
 @WidgetProperties({ @WidgetProperty(key = "chartTitle", type = WidgetPropertyType.STRING) })
 public class TDWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
-    private static final String ID            = "td_widget";
-    private static final String TITLE         = "Sonar TD";
-    private static final String TEMPLATE_PATH = "/net/siliconcode/sonar/frontend/td.html.erb";
+    private static final String ID            = "sparqline_td_widget";
+    private static final String TITLE         = "SparQLine TD";
+    private static final String TEMPLATE_PATH = "/com/sparqline/sonar/frontend/td.html.erb";
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getId()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getId()
@@ -55,9 +56,8 @@ public class TDWidget extends AbstractRubyTemplate implements RubyRailsWidget {
         return ID;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.AbstractRubyTemplate#getTemplatePath()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected String getTemplatePath()
@@ -65,9 +65,8 @@ public class TDWidget extends AbstractRubyTemplate implements RubyRailsWidget {
         return TEMPLATE_PATH;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getTitle()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getTitle()

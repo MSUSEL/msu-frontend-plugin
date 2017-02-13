@@ -1,8 +1,8 @@
 <%
- # The MIT License (MIT)
+  # The MIT License (MIT)
   #
-  # SiliconCode Sonar Front End Plugin
-  # Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+  # SparQLine Analytics Sonar Front End Plugin
+  # Copyright (c) 2015-2017 Isaac Griffith, SparQLine Analytics, LLC
   #
   # Permission is hereby granted, free of charge, to any person obtaining a copy
   # of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,6 @@
   # portability = widget_properties["portabilityMetric"]
   # usability = widget_properties["usabilityMetric"]
   # compatibility = widget_properties["compatibilityMetric"]
-  
-  
   
   $data = Hash.new
   
@@ -98,7 +96,7 @@
       metrics = Hash.new
       metric_names = nil
       
-      quamoco_names = "quamoco.QUALITY,quamoco.FUNCTIONAL_SUITABILITY,quamoco.SECURITY,quamoco.RELIABILITY,quamoco.MAINTAINABILITY,quamoco.PERFORMANCE_EFFICIENCY,quamoco.PORTABILITY,quamoco.FUNCTIONAL_CORRECTNESS,quamoco.TESTABILITY,quamoco.MODIFIABILITY,quamoco.ANALYZABILITY,quamoco.REUSABILITY,quamoco.TIME_BEHAVIOR,quamoco.RESOURCE_UTILIZATION"
+      quamoco_names = "quamoco.QUALITY_@PRODUCT,quamoco.PERFORMANCE_EFFICIENCY,quamoco.PORTABILITY,quamoco.FUNCTIONAL_SUITABILITY,quamoco.MAINTAINABILITY,quamoco.COMPATIBILITY,quamoco.RELIABILITY,quamoco.SECURITY,quamoco.USABILITY"
       qmood_names = "qmood.REUSABILITY,qmood.FLEXIBILITY,qmood.UNDERSTANDABILITY,qmood.FUNCTIONALITY,qmood.EXTENDIBILITY,qmood.EFFECTIVENESS"
       columbus_names = "columbus.MAINTAINABILITY,columbus.TESTABILITY,columbus.ANALYZABILITY,columbus.EFFECTIVENESS,columbus.STABILITY,columbus.CHANGEABILITY"
       sqale_names = "maintainability,efficiency,reliability,usability,portability"
@@ -118,7 +116,7 @@
       
       unless metric_names.nil?
           metric_names.split(",").each do |x|
-          	metrics[x] = metric(x)
+          	metrics[x] = metric(x) unless metric(x).nil?
           end
       end
       

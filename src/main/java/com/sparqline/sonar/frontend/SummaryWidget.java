@@ -1,8 +1,8 @@
 /**
  * The MIT License (MIT)
  *
- * SiliconCode Sonar Front End Plugin
- * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+ * SparQLine Analytics Sonar Front End Plugin
+ * Copyright (c) 2015-2017 Isaac Griffith, SparQLine Analytics, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.siliconcode.sonar.frontend;
+
+package com.sparqline.sonar.frontend;
 
 import org.sonar.api.web.AbstractRubyTemplate;
 import org.sonar.api.web.Description;
@@ -33,11 +34,13 @@ import org.sonar.api.web.WidgetProperty;
 import org.sonar.api.web.WidgetPropertyType;
 
 /**
+ * A Ruby on Rails widget for diplaying summary data in SonarQube
+ * 
  * @author Isaac Griffith
- * @version 1.0
+ * @version 1.1.1
  */
 @UserRole(UserRole.USER)
-@Description("")
+@Description("SparQLine Analytics Summary Display")
 @WidgetProperties({
         @WidgetProperty(key = "qualityMetric", defaultValue = "sc_summary_quality", type = WidgetPropertyType.METRIC, description = "Metric for quality.", optional = false),
         @WidgetProperty(key = "rmfMetric", defaultValue = "sc_summary_rmf", type = WidgetPropertyType.METRIC, description = "Metric for RMF.", optional = false),
@@ -51,13 +54,12 @@ import org.sonar.api.web.WidgetPropertyType;
         @WidgetProperty(key = "effortToEMetric", defaultValue = "sc_summary_effort_d", type = WidgetPropertyType.METRIC, description = "Metric for effort to E.", optional = false) })
 public class SummaryWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
-    private static final String ID            = "Summary_widget";
-    private static final String TITLE         = "Sonar Summary Display";
-    private static final String TEMPLATE_PATH = "/net/siliconcode/sonar/frontend/summary.html.erb";
+    private static final String ID            = "sparqline_summary_widget";
+    private static final String TITLE         = "SparQLine Summary Display";
+    private static final String TEMPLATE_PATH = "/com/sparqline/sonar/frontend/summary.html.erb";
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getId()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getId()
@@ -65,9 +67,8 @@ public class SummaryWidget extends AbstractRubyTemplate implements RubyRailsWidg
         return ID;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.AbstractRubyTemplate#getTemplatePath()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected String getTemplatePath()
@@ -75,9 +76,8 @@ public class SummaryWidget extends AbstractRubyTemplate implements RubyRailsWidg
         return TEMPLATE_PATH;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.sonar.api.web.View#getTitle()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getTitle()

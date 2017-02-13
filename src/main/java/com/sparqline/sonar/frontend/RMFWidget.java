@@ -1,8 +1,8 @@
 /**
  * The MIT License (MIT)
  *
- * SiliconCode Sonar Front End Plugin
- * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+ * SparQLine Analytics Sonar Front End Plugin
+ * Copyright (c) 2015-17 Isaac Griffith, SparQLine Analytics, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.siliconcode.sonar.frontend;
+package com.sparqline.sonar.frontend;
 
 import org.sonar.api.web.AbstractRubyTemplate;
 import org.sonar.api.web.Description;
@@ -33,11 +33,13 @@ import org.sonar.api.web.WidgetProperty;
 import org.sonar.api.web.WidgetPropertyType;
 
 /**
+ * A Ruby on Rails widget for displaying RMF data.
+ * 
  * @author Isaac Griffith
- * @version 1.0
+ * @version 1.1.1
  */
 @UserRole(UserRole.USER)
-@Description("")
+@Description("SparQLine Analytics RMF Display Widget")
 @WidgetProperties({
         @WidgetProperty(key = "gradeAmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of A", optional = false),
         @WidgetProperty(key = "gradeBmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of B", optional = false),
@@ -54,9 +56,9 @@ import org.sonar.api.web.WidgetPropertyType;
         @WidgetProperty(key = "riskAnalysisMetric", defaultValue = "sc_rmf_risk_analysis", type = WidgetPropertyType.METRIC, description = "Metric for Risk Analysis", optional = false) })
 public class RMFWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
-    private static final String ID            = "rmf_widget";
-    private static final String TITLE         = "Sonar RMF Bullet Chart";
-    private static final String TEMPLATE_PATH = "/net/siliconcode/sonar/frontend/rmf.html.erb";
+    private static final String ID            = "sparqline_rmf_widget";
+    private static final String TITLE         = "SparQLine RMF Bullet Chart";
+    private static final String TEMPLATE_PATH = "/com/sparqline/sonar/frontend/rmf.html.erb";
 
     /**
      * {@inheritDoc}

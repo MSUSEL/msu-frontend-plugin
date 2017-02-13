@@ -1,8 +1,8 @@
 /**
  * The MIT License (MIT)
  *
- * SiliconCode Sonar Front End Plugin
- * Copyright (c) 2015 Isaac Griffith, SiliconCode, LLC
+ * SparQLine Analytics Sonar Front End Plugin
+ * Copyright (c) 2015-2017 Isaac Griffith, SiliconCode, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +22,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.siliconcode.sonar.frontend;
+package com.sparqline.sonar.frontend;
 
 import static java.util.Arrays.asList;
 
 import java.util.List;
 
-import org.sonar.api.SonarPlugin;
+import org.sonar.api.Plugin;
 
 import com.google.common.collect.Lists;
 
 /**
+ * Plugin information provider for the SparQLine Frontend Plugin
+ * 
  * @author Isaac Griffith
- * @version 1.0
+ * @version 1.1.1
  */
-public class FrontEndPlugin extends SonarPlugin {
+public class FrontEndPlugin implements Plugin {
 
     /**
-     * {@inheritDoc}
+     * @return List of extension classes provided by this plugin
      */
     @SuppressWarnings("unchecked")
-    @Override
-    public List getExtensions() {
+    public List getExtensions()
+    {
         List extensions = Lists.newArrayList();
         extensions.addAll(asList(BulletsWidget.class, DevProgressWidget.class, RMFWidget.class, SummaryWidget.class,
                 TDWidget.class, TestingWidget.class));
 
         return extensions;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void define(Context context)
+    {
+        context.addExtensions(getExtensions());
     }
 }
