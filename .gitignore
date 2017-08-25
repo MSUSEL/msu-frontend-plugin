@@ -13,3 +13,6 @@ target/msufront-plugin-1.1.jar
 /.sonar/
 /Sonar_MSU-FrontEnd_Plugin.udb
 /sonar-project.properties
+/.settings/
+/.classpath/
+/.project/
