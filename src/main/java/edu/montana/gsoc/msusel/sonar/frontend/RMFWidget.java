@@ -1,8 +1,9 @@
 /**
  * The MIT License (MIT)
  *
- * SparQLine Analytics Sonar Front End Plugin
- * Copyright (c) 2015-17 Isaac Griffith, SparQLine Analytics, LLC
+ * MSUSEL Front End Sonar Plugin
+ * Copyright (c) 2015-2017 Montana State University, Gianforte School of Computing,
+ * Software Engineering Laboratory
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +23,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.sparqline.sonar.frontend;
+package edu.montana.gsoc.msusel.sonar.frontend;
 
 import org.sonar.api.web.AbstractRubyTemplate;
 import org.sonar.api.web.Description;
@@ -39,26 +40,26 @@ import org.sonar.api.web.WidgetPropertyType;
  * @version 1.1.1
  */
 @UserRole(UserRole.USER)
-@Description("SparQLine Analytics RMF Display Widget")
+@Description("MSUSEL RMF Display Widget")
 @WidgetProperties({
         @WidgetProperty(key = "gradeAmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of A", optional = false),
         @WidgetProperty(key = "gradeBmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of B", optional = false),
         @WidgetProperty(key = "gradeCmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of C", optional = false),
         @WidgetProperty(key = "gradeDmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of D", optional = false),
         @WidgetProperty(key = "gradeEmin", defaultValue = "0.98", type = WidgetPropertyType.FLOAT, description = "Minimum value for a grade of E", optional = false),
-        @WidgetProperty(key = "securityMetric", defaultValue = "sc_rmf_security", type = WidgetPropertyType.METRIC, description = "Metric for security", optional = false),
-        @WidgetProperty(key = "accessControlMetric", defaultValue = "sc_rmf_access_ctrl", type = WidgetPropertyType.METRIC, description = "Metric for Access Control", optional = false),
-        @WidgetProperty(key = "assessmentAuthenticationMetric", defaultValue = "sc_rmf_assess_auth", type = WidgetPropertyType.METRIC, description = "Metric for Assessment and Authentication", optional = false),
-        @WidgetProperty(key = "auditAccountabilityMetric", defaultValue = "sc_rmf_audit_account", type = WidgetPropertyType.METRIC, description = "Metric for Audit and Accountability", optional = false),
-        @WidgetProperty(key = "configManagementMetric", defaultValue = "sc_rmf_confg_mgmt", type = WidgetPropertyType.METRIC, description = "Metric for Configuration Management", optional = false),
-        @WidgetProperty(key = "identificationAuthenticationMetric", defaultValue = "sc_rmf_id_auth", type = WidgetPropertyType.METRIC, description = "Metric for Identification and Authentication", optional = false),
-        @WidgetProperty(key = "maintenanceMetric", defaultValue = "sc_rmf_maint", type = WidgetPropertyType.METRIC, description = "Metric for Maintenance", optional = false),
-        @WidgetProperty(key = "riskAnalysisMetric", defaultValue = "sc_rmf_risk_analysis", type = WidgetPropertyType.METRIC, description = "Metric for Risk Analysis", optional = false) })
+        @WidgetProperty(key = "securityMetric", defaultValue = "sel_rmf_security", type = WidgetPropertyType.METRIC, description = "Metric for security", optional = false),
+        @WidgetProperty(key = "accessControlMetric", defaultValue = "sel_rmf_access_ctrl", type = WidgetPropertyType.METRIC, description = "Metric for Access Control", optional = false),
+        @WidgetProperty(key = "assessmentAuthenticationMetric", defaultValue = "sel_rmf_assess_auth", type = WidgetPropertyType.METRIC, description = "Metric for Assessment and Authentication", optional = false),
+        @WidgetProperty(key = "auditAccountabilityMetric", defaultValue = "sel_rmf_audit_account", type = WidgetPropertyType.METRIC, description = "Metric for Audit and Accountability", optional = false),
+        @WidgetProperty(key = "configManagementMetric", defaultValue = "sel_rmf_confg_mgmt", type = WidgetPropertyType.METRIC, description = "Metric for Configuration Management", optional = false),
+        @WidgetProperty(key = "identificationAuthenticationMetric", defaultValue = "sel_rmf_id_auth", type = WidgetPropertyType.METRIC, description = "Metric for Identification and Authentication", optional = false),
+        @WidgetProperty(key = "maintenanceMetric", defaultValue = "sel_rmf_maint", type = WidgetPropertyType.METRIC, description = "Metric for Maintenance", optional = false),
+        @WidgetProperty(key = "riskAnalysisMetric", defaultValue = "sel_rmf_risk_analysis", type = WidgetPropertyType.METRIC, description = "Metric for Risk Analysis", optional = false) })
 public class RMFWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
-    private static final String ID            = "sparqline_rmf_widget";
-    private static final String TITLE         = "SparQLine RMF Bullet Chart";
-    private static final String TEMPLATE_PATH = "/com/sparqline/sonar/frontend/rmf.html.erb";
+    private static final String ID            = "msusel_rmf_widget";
+    private static final String TITLE         = "MSUSEL RMF Bullet Chart";
+    private static final String TEMPLATE_PATH = "/edu/montana/gsoc/msusel/sonar/frontend/rmf.html.erb";
 
     /**
      * {@inheritDoc}

@@ -1,8 +1,9 @@
 /**
  * The MIT License (MIT)
  *
- * SparQLine Analytics Sonar Front End Plugin
- * Copyright (c) 2015-2017 Isaac Griffith, SparQLine Analytics, LLC
+ * MSUSEL Front End Sonar Plugin
+ * Copyright (c) 2015-2017 Montana State University, Gianforte School of Computing,
+ * Software Engineering Laboratory
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +23,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package edu.montana.gsoc.msusel.sonar.frontend;
+
+import static java.util.Arrays.asList;
+
+import java.util.List;
+
+import org.sonar.api.Plugin;
+
+import com.google.common.collect.Lists;
+
 /**
- * This package includes widget definitions for the SonarQube > 5.6.5 framework.
- * Each widget is designed to provide
- * a display for infomation coming from the SparQLine Analytics, LLC widgets,
- * including: Quamoco Plugin, Developer Progress Plugin, RMF Plugin, Summary
- * Data Plugin, and the Testing Plugin.
+ * Plugin information provider for the MSUSEL Frontend Plugin
  * 
  * @author Isaac Griffith
  * @version 1.1.1
  */
-package com.sparqline.sonar.frontend;
+public class FrontEndPlugin implements Plugin {
+
+    /**
+     * @return List of extension classes provided by this plugin
+     */
+    @SuppressWarnings("unchecked")
+    public List getExtensions()
+    {
+        List extensions = Lists.newArrayList();
+        extensions.addAll(asList(BulletsWidget.class, DevProgressWidget.class, RMFWidget.class, SummaryWidget.class,
+                TDWidget.class, TestingWidget.class));
+
+        return extensions;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void define(Context context)
+    {
+        context.addExtensions(getExtensions());
+    }
+}
