@@ -3,17 +3,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>edu.montana.gsoc.msusel.sonar</groupId>
-	<artifactId>msusel-frontend-plugin</artifactId>
+	<groupId>com.sparqline.sonar</groupId>
+	<artifactId>sparqline-frontend-plugin</artifactId>
 	<version>1.1.1</version>
-	<name>MSUSEL FrontEnd Sonar Plugin</name>
+	<packaging>sonar-plugin</packaging>
+	<name>SparQLine FrontEnd Plugin</name>
 	<organization>
-		<name>MSUSEL</name>
-		<url>https://msusel.github.io</url>
+		<name>SparQLine Analytics, LLC</name>
+		<url>http://www.sparqline.com</url>
 	</organization>
-	
-	<description>SonarQube frontend for MSUSEL Plugins</description>
-	
+
+	<description>SonarQube frontend for SparQLine Analytics Plugins
+	</description>
+
 	<licenses>
 		<license>
 			<name>The MIT License (MIT)</name>
@@ -21,14 +23,14 @@
 			<distribution></distribution>
 		</license>
 	</licenses>
-	
+
 	<developers>
 		<developer>
 			<id>isaac.griffith</id>
 			<name>Isaac Griffith</name>
 			<email>isaacgriffith@gmail.com</email>
-			<organization>MSUSEL</organization>
-			<organizationUrl>https://msusel.github.io/</organizationUrl>
+			<organization>SparQLine Analytics, LLC</organization>
+			<organizationUrl>http://www.sparqline.com/</organizationUrl>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -37,36 +39,52 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<sonar.buildVersion>5.6.5</sonar.buildVersion>
-		<jdk.min.version>1.8</jdk.min.version>
-		<msusel.version>1.0.12</msusel.version>
+		<sonar.buildVersion>5.6</sonar.buildVersion>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<sparqline.version>1.1.1</sparqline.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.sonarsource.sonarqube</groupId>
 			<artifactId>sonar-plugin-api</artifactId>
+			<scope>provided</scope>
+			<version>${sonar.buildVersion}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
-			<artifactId>sonar-packaging-maven-plugin</artifactId>
+			<groupId>com.sparqline.quamoco</groupId>
+			<artifactId>sparqline-codetree</artifactId>
+			<version>${sparqline.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>edu.montana.gsoc.msusel</groupId>
-			<artifactId>msusel-codetree</artifactId>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.8</version>
+		</dependency>
+
 		<!-- unit tests -->
 		<dependency>
 			<groupId>org.sonarsource.sonarqube</groupId>
 			<artifactId>sonar-testing-harness</artifactId>
 			<scope>test</scope>
+			<version>${sonar.buildVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+			<version>4.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.easytesting</groupId>
@@ -78,6 +96,7 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<scope>test</scope>
+			<version>1.10.19</version>
 		</dependency>
 	</dependencies>
 
@@ -86,11 +105,15 @@
 			<plugin>
 				<groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
 				<artifactId>sonar-packaging-maven-plugin</artifactId>
+				<version>1.16</version>
+				<extensions>true</extensions>
 				<configuration>
-					<pluginKey>msuselfrontend</pluginKey>
-					<pluginClass>edu.montana.gsoc.msusel.sonar.frontend.FrontEndPlugin</pluginClass>
-					<pluginName>MSUSEL FrontEnd Sonar Plugin</pluginName>
-					<pluginDescription>Displays quality information about projects.</pluginDescription>
+					<pluginKey>sparqline-frontend</pluginKey>
+					<pluginClass>com.sparqline.sonar.frontend.FrontEndPlugin
+					</pluginClass>
+					<pluginName>SparQLine Analytics Sonar FrontEnd Plugin</pluginName>
+					<pluginDescription>Collects quality information about projects.
+					</pluginDescription>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -98,8 +121,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>${jdk.min.version}</source>
-					<target>${jdk.min.version}</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -113,24 +136,10 @@
 					</instrumentation>
 				</configuration>
 			</plugin>
-			<!-- <executions>
-					<execution>
-						<id>clean</id>
-						<phase>pre-site</phase>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>instrument</id>
-						<phase>site</phase>
-						<goals>
-							<goal>instrument</goal>
-							<goal>cobertura</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
+			<!-- <executions> <execution> <id>clean</id> <phase>pre-site</phase> <goals> 
+				<goal>clean</goal> </goals> </execution> <execution> <id>instrument</id> 
+				<phase>site</phase> <goals> <goal>instrument</goal> <goal>cobertura</goal> 
+				</goals> </execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -151,6 +160,23 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<extensions>
 			<extension>
 				<groupId>ar.com.synergian</groupId>
@@ -185,8 +211,8 @@
 	</reporting>
 	<repositories>
 		<repository>
-			<id>msusel-maven-repo</id>
-			<name>msusel-maven-repo</name>
+			<id>sparqline-maven-repo</id>
+			<name>sparqline-maven-repo</name>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -194,7 +220,8 @@
 				<enabled>false</enabled>
 			</snapshots>
 
-			<url>https://raw.github.com/MSUSEL/msusel-maven-repo.git/master</url>
+			<url>https://api.bitbucket.org/1.0/repositories/isaacgriffith/sparqline-maven-repo/raw/releases
+			</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -203,55 +230,4 @@
 			<url>https://raw.github.com/synergian/wagon-git/releases</url>
 		</pluginRepository>
 	</pluginRepositories>
-	<distributionManagement>
-		<repository>
-			<id>msusel-maven-repo</id>
-			<name>msusel-maven-repo</name>
-			<url>git:releases://git@github.com:MSUSEL/msusel-maven-repo.git</url>
-		</repository>
-	</distributionManagement>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.sonarsource.sonarqube</groupId>
-				<artifactId>sonar-plugin-api</artifactId>
-				<version>${sonar.buildVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.sonarsource.sonarqube</groupId>
-				<artifactId>sonar-testing-harness</artifactId>
-				<version>${sonar.buildVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
-				<artifactId>sonar-packaging-maven-plugin</artifactId>
-				<version>1.17</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-all</artifactId>
-				<version>1.10.19</version>
-			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.12</version>
-			</dependency>
-			<dependency>
-				<groupId>org.easymock</groupId>
-				<artifactId>easymock</artifactId>
-				<version>3.4</version>
-			</dependency>
-			<dependency>
-				<groupId>org.easymock</groupId>
-				<artifactId>easymockclassextension</artifactId>
-				<version>3.2</version>
-			</dependency>
-			<dependency>
-				<groupId>edu.montana.gsoc.msusel</groupId>
-				<artifactId>msusel-codetree</artifactId>
-				<version>${msusel.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 </project>

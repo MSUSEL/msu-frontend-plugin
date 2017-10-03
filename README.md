@@ -1,7 +1,18 @@
-# MSUSEL FrontEnd SonarQube Plugin
+# sonar-msufront-plugin
 
-## Introduction
+A Ruby on Rails plugin for SonarQube(TM). This plugin provides the following widgets for use in SonarQube version 5.6.5 or greater:
 
-## Building
+* Quality Bullet Chart
+* Developer Progress
+* RMF Bullet Chart
+* Quality and TD Summary
+* TD Charts
+* Testing Display
 
-## Deploy
+## Building this plugin
+
+This plugin uses Maven as its build management tool. You can compile using the following command:
+
+`mvn package`
+
+## Upcoming Features
