@@ -4,18 +4,18 @@
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 
         <style>
-            .metric {
+            .name {
                 fill: #ffc;
                 stroke: #ccc;
                 stroke-width: 1;
             }
 
-            .metric-derived {
+            .name-derived {
                 fill: #000;
                 font-size: 15px;
             }
 
-            .metric-value {
+            .name-value {
                 fill: #000;
                 font-size: 15px;
             }
@@ -38,7 +38,7 @@
                 stroke-width: 2.5;
             }
 
-            .metric-title {
+            .name-title {
                 fill: black;
                 font-size: 15px;
             }
@@ -83,9 +83,9 @@
                     <h2 style="display: inline;" id='title-h2'>Metrics Pyramid</h2>
                     <hr style="float:left;width:100%"/>
                 </div> </span>
-            <script src="http://d3js.org/d3.v3.min.js"></script>
-            <script src="jquery-2.1.4.min.js"></script>
-            <script src="d3.tip.v0.6.3.js"></script>
+            <script source="http://d3js.org/d3.v3.min.js"></script>
+            <script source="jquery-2.1.4.min.js"></script>
+            <script source="d3.tip.v0.6.3.js"></script>
 
             <script>
                 var data = [{
@@ -260,7 +260,7 @@
                                 else
                                     return "end"
                             })
-                            .attr("class", "metric-derived")
+                            .attr("class", "name-derived")
                             .text(function(d) { return d.value; })
                             .attr("transform", function(d) {
                                 if (d.location[0] < 0) {
@@ -273,7 +273,7 @@
                                     return "translate(" + (cellWidth*(6+d.location[0]) + insets) + "," + ((d.location[1] + 1) * cellHeight - 4 + insets) + ")";
                             });
                             
-                    svg.selectAll(".metric-title").data(data).enter().append("text")
+                    svg.selectAll(".name-title").data(data).enter().append("text")
                         .attr("x", function(d) {
                             if (d.location[0] < 0)
                                 return 5;
@@ -287,7 +287,7 @@
                             else
                                 return "end";
                         })
-                        .attr("class", "metric-title")
+                        .attr("class", "name-title")
                         .text(function(d) { return d.title; })
                         .attr("transform", function(d) {
                             if (d.location[0] < 0)
@@ -318,7 +318,7 @@
                         else
                             return "red-box";
                     } else {
-                        return "metric";
+                        return "name";
                     }
                 }
 

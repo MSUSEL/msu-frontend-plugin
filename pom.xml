@@ -88,7 +88,7 @@
 				<artifactId>sonar-packaging-maven-plugin</artifactId>
 				<configuration>
 					<pluginKey>msuselfrontend</pluginKey>
-					<pluginClass>edu.montana.gsoc.msusel.sonar.frontend.FrontEndPlugin</pluginClass>
+					<pluginClass>edu.montana.gsoc.msusel.codetree.sonar.frontend.FrontEndPlugin</pluginClass>
 					<pluginName>MSUSEL FrontEnd Sonar Plugin</pluginName>
 					<pluginDescription>Displays quality information about projects.</pluginDescription>
 				</configuration>

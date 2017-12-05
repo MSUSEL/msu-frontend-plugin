@@ -1,0 +1,381 @@
+<%
+# The MIT License (MIT)
+# 
+# SparQLine Analytics Sonar Front End Plugin
+# Copyright (c) 2015-2017 Isaac Griffith, SparQLine Analytics, LLC
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+%>
+<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'quamoco.css') -%>" media="screen" />
+
+<div class="td-bullets" id="td-bullets" style="height=100%;width:100%;">
+<!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+    <span style="display:inline;width:100%;">
+        <div style="float:left;font-family:sans-serif;width:100%;">
+            <h2 style="display: inline;" id='title-h2'>Technical Debt</h2>&nbsp;&nbsp;&nbsp; <h3 style="display: inline;" id="compliance">(SQALE)</h3>
+            <div style="display: inline;float:right;font-family:sans-serif;">
+                <form>Method:&nbsp;&nbsp;<select class="td-method" id="td-method" onchange="update(this.options[this.selectedIndex].text)">
+                   <option value="nugroho">Nugroho</option>
+                   <option value="cast">CAST</option>
+                   <option value="sqale">SQALE</option>
+                   <option value="chin">Chin</option>
+                   <option value="marinescu">Marinescu</option>
+                </select></form>
+            </div>
+            <hr style="float:left;width:100%"/>
+        </div> </span>
+    <script source="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'bullets.js') -%>"></script>
+    <script source="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'CombinedChart.js') -%>"></script>
+    <script source="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'components.js') -%>"></script>
+    <script source="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'moment.min.js') -%>"></script>
+<script>
+// Setup the chart width and the data variable
+var chartWidth = $('#td-bullets').parent().width();
+var datas = [];
+
+// Extract data using SonarQube webservice and then fill the datas variable
+$(document).read(function() {
+    update(<%= mainTD %>);
+});
+
+function metrics(selected) {
+    if (selected === "nugroho")
+    {
+        return "sc_td_nugroho_principal,sc_td_nugroho_interest,sc_td_nugroho_ratio";
+    }
+    else if (selected === "cast")
+    {
+        return "sc_td_cast_principal,sc_td_cast_principal";
+    }
+    else if (selected === "sqale")
+    {
+        return "sqale_index,sqale_debt_ratio";
+    }
+    else if (selected === "chin")
+    {
+        return "sc_td_chin_principal,sc_td_chin_interest,sc_td_chin_ratio";
+    }
+    else if (selected === "marinescu")
+    {
+        return "sc_td_marinescu_principal,sc_td_marinescu_ratio"
+    }
+}
+
+function update(selected) {
+    datas = [];
+    var params = {
+        format: "json",
+        fromDateTime: moment().format("YYYY-MM-DDTHH:mm:ss.SSSZZ"),
+        metrics: metrics(selected),
+        resource: window.navbarOptions.get('contextKey')
+    };
+    var tens = {};
+    var tensMax = {};
+    var previous = {};
+    var current = {};
+    var names = [];
+        
+    // get last n days of values
+    $.getJSON('api/timemachine/index',params,function(d) {
+        for each (var obj in d['cols']) {
+            tens[obj['name']] = [];
+            names.push(obj['name']);
+        }
+        
+        // create trend array for each name
+        for each (var obj in d['cells']) {
+            for (var i = 0; i < names.length; i++)
+                tens[names[i]].push(obj['v'][i]);
+        }
+        
+        // find max of previous values
+        for each (var obj in names){
+            tensMax[obj] = Math.max.apply(null, tens[obj]);
+        }
+        
+        // set the previous value
+        for each (var obj in names) {
+            prev[obj] = tens[obj][tens[obj].length - 1];
+        }
+    });
+    
+    params = {
+        format: "json",
+        resource: window.navbarOptions.get('contextKey'), // get the resource name from the page
+        depth: 0,
+        scope: "PRJ",
+        languages: "java,cs",
+        includetrends: "false",
+        metrics: metrics(selected),
+    }
+    
+    // get current measures
+    $.getJSON('api/resources', params, function(d) {
+        for each (var obj in d["msr"]) {
+            var key = obj["key"];
+            var val = obj["val"];
+            current[key] = val;
+        }
+    });
+    
+    // fill in the datas variable
+    for each (var name in names) {
+        var param = {
+            key: name,
+            format: "json"
+        }
+        
+        $.getJSON('/api/metrics', param, function(d) {
+            var obj = {
+                "title": d[0]['name'],
+                "subtitle": "",
+                "last10max": tensMax[name],
+                "last10": tens[name],
+                "ranges": [],
+                "measures": [current[name], previous[name]],
+                "markers": [<%= minTD %>],
+                "value": [current[name], previous[name] - current[name]],
+            }
+            datas.push(obj);
+        });
+    }
+}
+
+var chart = d3.CombinedChart()
+    .height(45 - 5 - 20)
+    .valueFixed(2)
+    .containerWidth(chartWidth)
+    .data(datas)
+    .containerID("#td-bullets")
+    .cssclass("quamoco")
+    .grade(false);
+    
+chart.createChart();
+</script>
+<!--<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+</div>
+<div class="issue-bullets" id="issue-bullets" style="width:100%;">
+
+<script>
+issues = [];
+var i_params = {
+    format: "json",
+    fromDateTime: moment().format("YYYY-MM-DDTHH:mm:ss.SSSZZ"),
+    metrics: "sc_issues_antipatterns,sc_issues_codesmells,sc_issues_grime,sc_issues_modularity,sc_issues_asa",
+    resource: window.navbarOptions.get('contextKey')
+};
+var i_tens = {};
+var i_tensMax = {};
+var i_previous = {};
+var i_current = {};
+var i_names = [];
+    
+// get last n days of values
+$.getJSON('api/timemachine/index',i_params,function(d) {
+    for each (var obj in d['cols']) {
+        i_tens[obj['name']] = [];
+        i_names.push(obj['name']);
+    }
+    
+    // create trend array for each name
+    for each (var obj in d['cells']) {
+        for (var i = 0; i < names.length; i++)
+            i_tens[i_names[i]].push(obj['v'][i]);
+    }
+    
+    // find max of previous values
+    for each (var obj in i_names){
+        i_tensMax[obj] = Math.max.apply(null, i_tens[obj]);
+    }
+    
+    // set the previous value
+    for each (var obj in i_names) {
+        i_prev[obj] = i_tens[obj][i_tens[obj].length - 1];
+    }
+});
+
+i_params = {
+    format: "json",
+    resource: window.navbarOptions.get('contextKey'), // get the resource name from the page
+    depth: 0,
+    scope: "PRJ",
+    languages: "java,cs",
+    includetrends: "false",
+    metrics: "sc_issues_antipatterns,sc_issues_codesmells,sc_issues_grime,sc_issues_modularity,sc_issues_asa"
+}
+
+// get current measures
+$.getJSON('api/resources', i_params, function(d) {
+    for each (var obj in d["msr"]) {
+        var key = obj["key"];
+        var val = obj["val"];
+        i_current[key] = val;
+    }
+});
+
+// fill in the datas variable
+for each (var name in i_names) {
+    var param = {
+        key: name,
+        format: "json"
+    }
+    
+    $.getJSON('/api/metrics', param, function(d) {
+        var obj = {
+            "title": d[0]['name'],
+            "subtitle": "",
+            "last10max": i_tensMax[name],
+            "last10": i_tens[name],
+            "ranges": [],
+            "measures": [i_current[name], i_previous[name]],
+            "markers": [<%= minIssues %>],
+            "value": [i_current[name], i_previous[name] - i_current[name]],
+        }
+        issues.push(obj);
+    });
+}
+			  
+var insets = {top: 5, bottom: 20, titleRight: 158, sparkLeft: 162, sparkRight: 224, bulletLeft: 226, bulletRight: 494, valueLeft: 515, valueRight: 568, gradeLeft: 570},
+    width = 270,
+    height = 45 - insets.top - insets.bottom;
+
+var chart = d3.bullet()
+    .width(width)
+    .height(height);
+
+var svg = d3.select("#issue-bullets")
+	.selectAll("svg")
+	.data(issues)
+    .enter()
+	.append("svg")
+      .attr("class", "quamoco")
+      .attr("width", divwidth - 10)
+      .attr("height", 45)
+      .append("g")
+      .attr("transform", "translate(" + insets.bulletLeft + "," + insets.top + ")")
+      .call(chart);
+
+var title = svg.append("g")
+    .style("text-anchor", "end")
+    .attr("transform", "translate(-80," + height / 2 + ")");
+
+title.append("text")
+    .attr("class", "label")
+    .text(function(d) { return d.title; });
+
+title.append("text")
+    .attr("class", "sublabel")
+    .attr("dy", "1.4em")
+    .text(function(d) { return d.subtitle; });
+
+var value = svg.append("g")
+	.style("text_anchor", "start")
+	.attr("transform", "translate(275," + height / 2 + ")");
+
+value.append("text")
+	.attr("class", "value")
+	.attr("x", 5)
+	.attr("y", height / 2)
+	.attr("fill", "steelblue")
+	.text(function(d) { return d.value[0]; });
+
+value.append("text")
+	.attr("class", function(d) {
+		if (d.value[1] < 0)
+			return "negchange";
+		else if (d.value[1] > 0)
+			return "poschange";
+		else
+			return "zerochange";
+	})
+	.attr("x", 70)
+	.attr("y", height / 2)
+	.attr("fill", function(d) {
+		if (d.value[1] < 0)
+			return "red";
+		else if (d.value[1] > 0)
+			return "green";
+		else
+			return "black";
+	})
+	.text(function(d) { return "(" + d.value[1] + ")";});
+	
+var spark = svg.append("g"),
+	w = 65,
+	h = height,
+	barPadding = 2;
+spark = spark.attr("transform", "translate(-70," + height / 2 + ")");
+	
+spark.selectAll("rect")
+	.data(function(d) { return d.last10; })
+	.enter()
+	.append("rect")
+	.attr({
+		x: function(d, i) { return i * (w / 10);},
+		y: function(d) {return (height / 2 - 20) + (20 - ((d / 20) * 20));}, //function(d) { var scale = d3.scale.linear().domain([0,1]).range([insets.bottom, insets.top]); return scale.linear(d)},
+		width: function(d) { return w / 10 - barPadding; },
+		height: function(d) { return (((d / 20) * 20)); },
+		fill: "black"
+	});
+	
+var svg2 = d3.select("#issue-bullets")
+    .insert("svg","svg")
+		.attr("class", "quamoco")
+		.attr("width", divwidth - 10)
+		.attr("height", 20)
+		.append("g")
+		.style("text-anchor", "start")
+		.attr("transform", "translate(" + insets.bulletLeft + ", 0)");
+
+svg2.append("text")
+	.attr("class", "header")
+	.attr("x", -77)
+	.attr("y", 15)
+	.text("Last 10 Builds");
+	
+svg2.append("text")
+	.attr("class", "header")
+	.attr("x", 100)
+	.attr("y", 15)
+	.text("Current Build");
+	
+svg2.append("text")
+	.attr("class", "header")
+	.attr("x", insets.valueLeft - insets.bulletLeft)
+	.attr("y", 15)
+	.text("Current");
+
+var svg3 = d3.select("#issue-bullets")
+	.insert("svg","svg")
+		.attr("class", "quamoco")
+		.attr("width", divwidth - 10)
+		.attr("height", 20)
+		.append("g")
+		.style("text-anchor", "start")
+		
+svg3.append("text")
+	.attr("class", "title")
+	.attr("x", 0)
+	.attr("y", 15)
+	.text("Issues")
+</script>
+</div>
