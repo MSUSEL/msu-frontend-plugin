@@ -42,7 +42,7 @@ uiPass = widget_properties["uiPassMetric"]
 uiFail = widget_properties["uiFailMetric"]
 uiError = widget_properties["uiErrorMetric"]
 %>
-<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'quamoco.css') -%>" media="screen" />
+<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'quamoco.css') -%>" media="screen" />
         
 <div id="quamoco-tests" class="quamoco-tests quamoco_tests_widget" style="height:100%; width:815px">
 <!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
@@ -53,9 +53,9 @@ uiError = widget_properties["uiErrorMetric"]
             <h2 style="display: inline;" id='title-h2'>Testing</h2>
             <hr style="float:left;width:100%"/>
         </div> </span>
-    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'test.js') -%>"></script>
-    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'components.js') -%>"></script>
-    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'moment.min.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'test.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'components.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'moment.min.js') -%>"></script>
 <script>
 
 // Setup the chart width and the data variable

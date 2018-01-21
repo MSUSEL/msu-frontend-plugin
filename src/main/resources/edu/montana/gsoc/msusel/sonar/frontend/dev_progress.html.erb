@@ -27,7 +27,7 @@ productivity = widget_properties["productivityMetric"]
 issues = widget_properties["issuesMetric"]
 %>
 
-<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'quamoco.css') -%>" media="screen" />
+<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'quamoco.css') -%>" media="screen" />
 
 <div id="dev-bullets" class="dev-bullets quamoco_bullets_widget" style="height:100%; width:100%">
 <!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
@@ -37,10 +37,10 @@ issues = widget_properties["issuesMetric"]
             <h2 style="display: inline;" id='title-h2'>Development Progress</h2>
             <hr style="float:left;width:100%"/>
         </div> </span>
-    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'bullets.js') -%>"></script>
-    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'CombinedChart.js') -%>"></script>
-    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'components.js') -%>"></script>
-    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'moment.min.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'bullets.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'CombinedChart.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'components.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'moment.min.js') -%>"></script>
 <script>
 var chartWidth = $('#dev-bullets').parent().width();
 var datas = [];

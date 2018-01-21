@@ -34,7 +34,7 @@ effD = widget_properties["effortToDMetric"]
 effE = widget_properties["effortToEMetric"]
 %>
 
-<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'quamoco.css') -%>" media="screen" />
+<link rel="stylesheet" type="text/css" href="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'quamoco.css') -%>" media="screen" />
  
 <div id="quamoco-summary" class="quamoco-summary quamoco_summary_widget" style="height:100%; width:100%">
 
@@ -45,7 +45,7 @@ effE = widget_properties["effortToEMetric"]
             <h2 style="display: inline;" id='title-h2'>Summary</h2>
             <hr style="float:left;width:100%"/>
         </div> </span>
-    <script src="<%= url_for_static(:plugin => 'MSUFrontEnd', :path => 'components.js') -%>"></script>
+    <script src="<%= url_for_static(:plugin => 'msuselfrontend', :path => 'components.js') -%>"></script>
 <script>
 // Determine the grade associated with the provided value
 function grade(var value) {
