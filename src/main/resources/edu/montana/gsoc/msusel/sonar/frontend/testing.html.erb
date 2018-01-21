@@ -1,27 +1,4 @@
 <%
-# The MIT License (MIT)
-# 
-# SparQLine Analytics Sonar Front End Plugin
-# Copyright (c) 2015-2017 Isaac Griffith, SparQLine Analytics, LLC
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 acceptPass = widget_properties["acceptPassMetric"]
 acceptFail = widget_properties["acceptFailMetric"]
 acceptError = widget_properties["acceptErrorMetric"]
@@ -47,7 +24,7 @@ uiError = widget_properties["uiErrorMetric"]
 <div id="quamoco-tests" class="quamoco-tests quamoco_tests_widget" style="height:100%; width:815px">
 <!--[if lte IE 8 ]> <h3>Your browser is out of date and does not support this widget.</h3> <!--[endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-    
+
     <span style="display:inline;width:100%;">
         <div style="float:left;font-family:sans-serif;width:100%;">
             <h2 style="display: inline;" id='title-h2'>Testing</h2>
@@ -71,26 +48,26 @@ $(document).read(function() {
         resource: window.navbarOptions.get('contextKey')
     };
     var tens = {};
-        
+
     // get last n days of values
     $.getJSON('api/timemachine/index',params,function(d) {
         for each (var obj in d['cols']) {
             tens[obj['metric']] = [];
             names.push(obj['metric']);
         }
-        
+
         // create trend array for each metric
         for each (var obj in d['cells']) {
             for (var i = 0; i < names.length; i++)
                 tens[names[i]].push(obj['v'][i]);
         }
-        
+
         // set the previous value
         for each (var obj in names) {
             prev[obj] = tens[obj][tens[obj].length - 1];
         }
     });
-    
+
     params = {
         format: "json",
         resource: window.navbarOptions.get('contextKey'), // get the resource name from the page
@@ -100,7 +77,7 @@ $(document).read(function() {
         includetrends: "false",
         metrics: "<%= acceptPass %>,<%= acceptFail %>,<%= acceptError %>,<%= unitPass %>,<%= unitFail %>,<%= unitError %>,<%= integrationPass %>,<%= integrationFail %>,<%= integrationError %>,<%= pennPass %>,<%= pennFail %>,<%= pennError %>,<%= uiPass %>,<%= uiFail %>,<%= uiError %>"
     }
-    
+
     // get current measures
     $.getJSON('api/resources', params, function(d) {
         for each (var obj in d["msr"]) {
@@ -109,14 +86,14 @@ $(document).read(function() {
             current[key] = val;
         }
     });
-    
+
     // fill in the datas variable
     for each (var name in names) {
         var param = {
             key: name,
             format: "json"
         }
-        
+
         $.getJSON('/api/metrics', param, function(d) {
             var obj = {
                 "title": d[0]['name'],
@@ -174,13 +151,13 @@ var value = svg.append("g")
 	.attr("transform", "translate(278," + height / 2 + ")");
 
 valueWithChange(value, 60, height / 2, 60, false, "value", null, "%")
-	
+
 var spark = svg.append("g"),
 	w = 65,
 	h = height,
 	barPadding = 2;
 spark = spark.attr("transform", "translate(-70," + height / 2 + ")");
-	
+
 spark.selectAll("rect")
 	.data(function(d) { return d.last10; })
 	.enter()
@@ -207,19 +184,19 @@ svg2.append("text")
 	.attr("x", -77)
 	.attr("y", 15)
 	.text("Last 10 Builds");
-	
+
 svg2.append("text")
 	.attr("class", "header")
 	.attr("x", 100)
 	.attr("y", 15)
 	.text("Current Build");
-	
+
 svg2.append("text")
 	.attr("class", "header")
 	.attr("x", insets.valueLeft - insets.testLeft)
 	.attr("y", 15)
 	.text("Coverage");
-	
+
 var svg3 = d3.select("#quamoco-tests")
 	.append("svg")
 	.attr("class", "quamoco")
@@ -227,7 +204,7 @@ var svg3 = d3.select("#quamoco-tests")
 	.attr("height", 25)
 	.append("g")
 	.attr("transform", "translate(" + (insets.testLeft - 90) + ", 20)");
-	
+
 var key1 = svg3.append("g")
 
 key1.append("rect")
@@ -241,7 +218,7 @@ key1.append("text")
 	.attr("x", 25)
 	.attr("class", "key")
 	.text("Passing");
-	
+
 var key2 = svg3.append("g")
 	.attr("transform", "translate(80, 0)");
 
@@ -251,30 +228,30 @@ key2.append("rect")
 	.attr("x", 0)
 	.attr("y", -15)
 	.attr("class", "result s1");
-	
+
 key2.append("text")
 	.attr("x", 25)
 	.attr("class", "key")
 	.text("Failing");
-	
+
 var key3 = svg3.append("g")
 	.attr("transform", "translate(150, 0)");
-	
+
 key3.append("rect")
 	.attr("width", 20)
 	.attr("height", 20)
 	.attr("x", 0)
 	.attr("y", -15)
 	.attr("class", "result s0");
-	
+
 key3.append("text")
 	.attr("x", 25)
 	.attr("class", "key")
 	.text("Errors");
-	
+
 var key4 = svg3.append("g")
 	.attr("transform", "translate(220, 0)");
-	
+
 key4.append("line")
 	.attr("x1", 0)
 	.attr("x2", 0)
@@ -290,12 +267,12 @@ key4.append("text")
 
 var key5 = svg3.append("g")
 	.attr("transform", "translate(360, 0)");
-	
+
 key5.append("circle")
 	.attr("cx", 0)
 	.attr("cy", -5)
 	.attr("r", 5)
-	
+
 key5.append("text")
 	.attr("x", 13)
 	.attr("class", "key")

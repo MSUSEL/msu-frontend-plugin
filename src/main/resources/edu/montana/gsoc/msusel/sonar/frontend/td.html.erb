@@ -92,31 +92,31 @@ function update(selected) {
     var previous = {};
     var current = {};
     var names = [];
-        
+
     // get last n days of values
     $.getJSON('api/timemachine/index',params,function(d) {
         for each (var obj in d['cols']) {
             tens[obj['metric']] = [];
             names.push(obj['metric']);
         }
-        
+
         // create trend array for each metric
         for each (var obj in d['cells']) {
             for (var i = 0; i < names.length; i++)
                 tens[names[i]].push(obj['v'][i]);
         }
-        
+
         // find max of previous values
         for each (var obj in names){
             tensMax[obj] = Math.max.apply(null, tens[obj]);
         }
-        
+
         // set the previous value
         for each (var obj in names) {
             prev[obj] = tens[obj][tens[obj].length - 1];
         }
     });
-    
+
     params = {
         format: "json",
         resource: window.navbarOptions.get('contextKey'), // get the resource name from the page
@@ -126,7 +126,7 @@ function update(selected) {
         includetrends: "false",
         metrics: metrics(selected),
     }
-    
+
     // get current measures
     $.getJSON('api/resources', params, function(d) {
         for each (var obj in d["msr"]) {
@@ -135,14 +135,14 @@ function update(selected) {
             current[key] = val;
         }
     });
-    
+
     // fill in the datas variable
     for each (var name in names) {
         var param = {
             key: name,
             format: "json"
         }
-        
+
         $.getJSON('/api/metrics', param, function(d) {
             var obj = {
                 "title": d[0]['name'],
@@ -167,7 +167,7 @@ var chart = d3.CombinedChart()
     .containerID("#td-bullets")
     .cssclass("quamoco")
     .grade(false);
-    
+
 chart.createChart();
 </script>
 <!--<![endif]-->
@@ -188,25 +188,25 @@ var i_tensMax = {};
 var i_previous = {};
 var i_current = {};
 var i_names = [];
-    
+
 // get last n days of values
 $.getJSON('api/timemachine/index',i_params,function(d) {
     for each (var obj in d['cols']) {
         i_tens[obj['metric']] = [];
         i_names.push(obj['metric']);
     }
-    
+
     // create trend array for each metric
     for each (var obj in d['cells']) {
         for (var i = 0; i < names.length; i++)
             i_tens[i_names[i]].push(obj['v'][i]);
     }
-    
+
     // find max of previous values
     for each (var obj in i_names){
         i_tensMax[obj] = Math.max.apply(null, i_tens[obj]);
     }
-    
+
     // set the previous value
     for each (var obj in i_names) {
         i_prev[obj] = i_tens[obj][i_tens[obj].length - 1];
@@ -238,7 +238,7 @@ for each (var name in i_names) {
         key: name,
         format: "json"
     }
-    
+
     $.getJSON('/api/metrics', param, function(d) {
         var obj = {
             "title": d[0]['name'],
@@ -253,7 +253,7 @@ for each (var name in i_names) {
         issues.push(obj);
     });
 }
-			  
+
 var insets = {top: 5, bottom: 20, titleRight: 158, sparkLeft: 162, sparkRight: 224, bulletLeft: 226, bulletRight: 494, valueLeft: 515, valueRight: 568, gradeLeft: 570},
     width = 270,
     height = 45 - insets.top - insets.bottom;
@@ -318,13 +318,13 @@ value.append("text")
 			return "black";
 	})
 	.text(function(d) { return "(" + d.value[1] + ")";});
-	
+
 var spark = svg.append("g"),
 	w = 65,
 	h = height,
 	barPadding = 2;
 spark = spark.attr("transform", "translate(-70," + height / 2 + ")");
-	
+
 spark.selectAll("rect")
 	.data(function(d) { return d.last10; })
 	.enter()
@@ -336,7 +336,7 @@ spark.selectAll("rect")
 		height: function(d) { return (((d / 20) * 20)); },
 		fill: "black"
 	});
-	
+
 var svg2 = d3.select("#issue-bullets")
     .insert("svg","svg")
 		.attr("class", "quamoco")
@@ -351,13 +351,13 @@ svg2.append("text")
 	.attr("x", -77)
 	.attr("y", 15)
 	.text("Last 10 Builds");
-	
+
 svg2.append("text")
 	.attr("class", "header")
 	.attr("x", 100)
 	.attr("y", 15)
 	.text("Current Build");
-	
+
 svg2.append("text")
 	.attr("class", "header")
 	.attr("x", insets.valueLeft - insets.bulletLeft)
@@ -371,7 +371,7 @@ var svg3 = d3.select("#issue-bullets")
 		.attr("height", 20)
 		.append("g")
 		.style("text-anchor", "start")
-		
+
 svg3.append("text")
 	.attr("class", "title")
 	.attr("x", 0)

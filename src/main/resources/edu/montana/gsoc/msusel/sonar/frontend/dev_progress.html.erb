@@ -1,27 +1,4 @@
 <%
-# The MIT License (MIT)
-# 
-# SparQLine Analytics Sonar Front End Plugin
-# Copyright (c) 2015-2017 Isaac Griffith, SparQLine Analytics, LLC
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 functionality = widget_properties["functionalityMetric"]
 productivity = widget_properties["productivityMetric"]
 issues = widget_properties["issuesMetric"]
@@ -59,31 +36,31 @@ $(document).read(function() {
     var previous = {};
     var current = {};
     var names = [];
-        
+
     // get last n days of values
     $.getJSON('api/timemachine/index',params,function(d) {
         for each (var obj in d['cols']) {
             tens[obj['metric']] = [];
             names.push(obj['metric']);
         }
-        
+
         // create trend array for each metric
         for each (var obj in d['cells']) {
             for (var i = 0; i < names.length; i++)
                 tens[names[i]].push(obj['v'][i]);
         }
-        
+
         // find max of previous values
         for each (var obj in names){
             tensMax[obj] = Math.max.apply(null, tens[obj]);
         }
-        
+
         // set the previous value
         for each (var obj in names) {
             prev[obj] = tens[obj][tens[obj].length - 1];
         }
     });
-    
+
     params = {
         format: "json",
         resource: window.navbarOptions.get('contextKey'), // get the resource name from the page
@@ -93,7 +70,7 @@ $(document).read(function() {
         includetrends: "false",
         metrics: "<%= functionality %>,<%= productivity %>,<%= issues %>"
     }
-    
+
     // get current measures
     $.getJSON('api/resources', params, function(d) {
         for each (var obj in d["msr"]) {
@@ -102,14 +79,14 @@ $(document).read(function() {
             current[key] = val;
         }
     });
-    
+
     // fill in the datas variable
     for each (var name in names) {
         var param = {
             key: name,
             format: "json"
         }
-        
+
         $.getJSON('/api/metrics', param, function(d) {
             var obj = {
                 "title": d[0]['name'],
@@ -134,7 +111,7 @@ var chart = d3.CombinedChart()
     .containerID("#dev-bullets")
     .cssclass("quamoco")
     .grade(false);
-    
+
     chart.createChart();
 
 </script>
